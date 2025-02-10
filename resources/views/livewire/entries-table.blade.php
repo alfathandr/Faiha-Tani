@@ -168,13 +168,15 @@
                                     <input class="form-control" type="file" wire:model="image" required>
                                 </div>
                                 <div class="col-md-12">
-                                    <label>Deskripsi</label>
-                                    <textarea class="form-control" rows="5" wire:model="description" required></textarea>
+                                    <label>Deskripsi</label> 
+                                    <textarea class="form-control" rows="5" wire:model="description"required></textarea>
                                 </div>
                                 <div class="col-md-12 mt-3">
-                                    <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct">
-                                        Perbarui Data
-                                    </button>
+                                <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct"
+                                    wire:loading.attr="disabled" wire:target="image"
+                                    :disabled="!$wire.name || !$wire.price || !$wire.stock || !$wire.image || !$wire.description">
+                                    Perbarui Data
+                                </button>
                                 </div>
 
                             </div>
