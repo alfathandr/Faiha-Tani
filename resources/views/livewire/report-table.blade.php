@@ -57,6 +57,7 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
@@ -68,6 +69,7 @@
                             <tbody>
                                 @forelse ($transactions as $transaction)
                                     <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <img src="{{ asset('storage/' . $transaction->product->image) }}" class="avatar avatar-sm me-3" alt="{{ $transaction->product->name }}">
