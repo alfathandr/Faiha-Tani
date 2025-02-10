@@ -153,23 +153,23 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Nama</label>
-                                    <input class="form-control" type="text" wire:model="name">
+                                    <input class="form-control" type="text" wire:model="name" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Harga</label>
-                                    <input class="form-control" type="number" wire:model="price">
+                                    <input class="form-control" type="number" wire:model="price" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Jumlah</label>
-                                    <input class="form-control" type="number" wire:model="stock">
+                                    <input class="form-control" type="number" wire:model="stock" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gambar</label>
-                                    <input class="form-control" type="file" wire:model="image">
+                                    <input class="form-control" type="file" wire:model="image" required>
                                 </div>
                                 <div class="col-md-12">
                                     <label>Deskripsi</label>
-                                    <textarea class="form-control" rows="5" wire:model="description"></textarea>
+                                    <textarea class="form-control" rows="5" wire:model="description" required></textarea>
                                 </div>
                                 <div class="col-md-12 mt-3">
                                     <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct">
