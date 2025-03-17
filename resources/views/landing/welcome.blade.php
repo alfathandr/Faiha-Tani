@@ -65,54 +65,41 @@
             <div class="container overflow-hidden mt-2" style="max-width: 90%; position: relative;">
                 <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                    <!-- Slide 1 -->
-                    <div class="carousel-item active">
-                        <div class="row px-xl-5 px-sm-4 px-3">
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/1.jpg" alt="Pupuk 1" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/2.jpg" alt="Pupuk 2" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/3.jpg" alt="Pupuk 3" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/4.jpg" alt="Pupuk 4" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 2 -->
-                    <div class="carousel-item">
-                        <div class="row px-xl-5 px-sm-4 px-3">
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/1.jpg" alt="Pupuk 1" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/2.jpg" alt="Pupuk 2" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/4.jpg" alt="Pupuk 4" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        <div class="col-3 px-1">
-                            <img src="../assets/pupuk/3.jpg" alt="Pupuk 3" class="w-100 border-radius-lg shadow-sm">
-                        </div>
-                        </div>
-                    </div>
+                        @php
+                            $chunks = $products->chunk(4); // Membagi produk ke dalam grup berisi 4 item per slide
+                            $isActive = true;
+                        @endphp
+
+                        @foreach ($chunks as $chunk)
+                            <div class="carousel-item {{ $isActive ? 'active' : '' }}">
+                                <div class="row px-xl-5 px-sm-4 px-3">
+                                    @foreach ($chunk as $product)
+                                        <div class="col-3 px-1">
+                                            <div class="card shadow-sm border-0">
+                                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-100 border-radius-lg">
+                                                <div class="card-body text-center">
+                                                    <h6 class="text-dark font-weight-bold mb-1">{{ $product->name }}</h6>
+                                                    <p class="text-muted mb-1">Stock: {{ $product->stock }}</p>
+                                                    <p class="text-success font-weight-bold">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @php $isActive = false; @endphp
+                        @endforeach
                     </div>
 
                     <!-- Tombol Navigasi -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
-
 
 
             <div class="card-body">
