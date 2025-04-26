@@ -18,7 +18,7 @@
                             <h6 class="text-uppercase font-weight-bold">Total Penjualan: <strong class="text-success">Rp {{ number_format($totalSales, 0, ',', '.') }}</strong></h6>
                         </div>
 
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <h5 class="font-weight-bolder">Cetak Report</h5>
                             <button class="btn btn-icon btn-success" type="button">
                                 <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
@@ -29,6 +29,19 @@
                                 <span class="btn-inner--icon block"><i class="ni ni-bag-17"></i></span>
                                 <span class="btn-inner--text block"> BULAN INI</span>
                             </button>
+                        </div> -->
+
+                        <div class="col-4">
+                            <h5 class="font-weight-bolder">Cetak Report</h5>
+                            <a href="{{ route('report.show', ['type' => 'all']) }}" class="btn btn-icon btn-success" target="_blank">
+                                <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
+                                <span class="btn-inner--text"> SEMUA DATA</span>
+                            </a>
+
+                            <a href="{{ route('report.show', ['type' => 'monthly']) }}" class="btn btn-icon btn-primary" target="_blank">
+                                <span class="btn-inner--icon block"><i class="ni ni-bag-17"></i></span>
+                                <span class="btn-inner--text block"> BULAN INI</span>
+                            </a>
                         </div>
                     </div>
                 </div>

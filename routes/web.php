@@ -27,5 +27,6 @@ Route::middleware('auth')->group(function () {
 
 
     Route::put('/profil/{user}', [App\Http\Controllers\ProfilController::class, 'update'])->name('profil.update');
+    Route::get('/report/{type}', [ReportController::class, 'show'])->name('report.show');
 
 });
