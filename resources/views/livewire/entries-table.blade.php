@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gambar</label>
-                                    <input class="form-control" type="file" wire:model="image" required>
+                                    <input class="form-control" type="file" wire:model="image">
                                 </div>
                                 <div class="col-md-12">
                                     <label>Deskripsi</label> 
