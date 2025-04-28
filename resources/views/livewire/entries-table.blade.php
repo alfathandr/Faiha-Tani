@@ -174,7 +174,7 @@
                                 <div class="col-md-12 mt-3">
                                 <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct"
                                     wire:loading.attr="disabled" wire:target="image"
-                                    :disabled="!$wire.name || !$wire.price || !$wire.stock || !$wire.image || !$wire.description">
+                                    :disabled="!$wire.name || !$wire.price || !$wire.stock || !$wire.description">
                                     Perbarui Data
                                 </button>
                                 </div>
