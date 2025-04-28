@@ -169,7 +169,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label>Deskripsi</label> 
-                                    <textarea class="form-control" rows="5" wire:model="description"required></textarea>
+                                    <textarea class="form-control" rows="5" wire:model="description" required></textarea>
                                 </div>
                                 <div class="col-md-12 mt-3">
                                 <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct"
