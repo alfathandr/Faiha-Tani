@@ -26,7 +26,7 @@ class EntriesTable extends Component
         'description' => 'nullable|string',
         'price' => 'required|numeric|min:0',
         'stock' => 'required|integer|min:0',
-        'image' => 'required|image|max:2048'
+        'image' => 'image|max:2048'
     ];
 
     public function addProduct()
