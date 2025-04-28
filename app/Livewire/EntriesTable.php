@@ -90,7 +90,7 @@ class EntriesTable extends Component
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'image' => 'image|max:2048' // max 2MB
+            'image' => 'nullable|image|max:2048' // max 2MB
         ]);
     
         if (!$this->selectedProduct) {
