@@ -108,7 +108,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Nama</label>
+                                    <label>Nama Barang</label>
                                     <input class="form-control" type="text" wire:model="name" required>
                                     @error('name') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
@@ -123,7 +123,7 @@
                                     @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Jumlah</label>
+                                    <label>Stok</label>
                                     <input class="form-control" type="number" wire:model="stock" required>
                                     @error('stock') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
@@ -160,7 +160,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Nama</label>
+                                    <label>Nama Barang</label>
                                     <input class="form-control" type="text" wire:model="name" required>
                                 </div>
                                 <div class="col-md-6">
@@ -172,7 +172,7 @@
                                     <input class="form-control" type="number" wire:model="price" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Jumlah</label>
+                                    <label>Stok</label>
                                     <input class="form-control" type="number" wire:model="stock" required>
                                 </div>
                                 <div class="col-md-6">

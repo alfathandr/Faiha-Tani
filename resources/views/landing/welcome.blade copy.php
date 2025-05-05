@@ -63,33 +63,55 @@
 
             
             <div class="container overflow-hidden mt-2" style="max-width: 90%; position: relative;">
-              <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-inner">
-                      @php $chunks = $products->chunk(4); $isActive = true; @endphp
-                      @foreach ($chunks as $chunk)
-                          <div class="carousel-item {{ $isActive ? 'active' : '' }}">
-                              <div class="row px-xl-5 px-sm-4 px-3">
-                                  @foreach ($chunk as $product)
-                                      <div class="col-3 px-1">
-                                          <div class="card shadow-sm border-0 product-card" data-bs-toggle="modal" data-bs-target="#modal-default" data-name="{{ $product->name }}" data-image="{{ asset('storage/' . $product->image) }}" data-price="Rp {{ number_format($product->price, 0, ',', '.') }},-" data-stock="{{ $product->stock }}" data-description="{{ $product->description }}">
-                                              <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-100 border-radius-lg">
-                                              <div class="card-body text-center">
-                                                  <h6 class="text-dark font-weight-bold mb-1">{{ $product->name }}</h6>
-                                                  <p class="text-muted mb-1">Stock: {{ $product->stock }}</p>
-                                                  <p class="text-success font-weight-bold">Rp {{ number_format($product->price, 0, ',', '.') }},-</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  @endforeach
-                              </div>
-                          </div>
-                          @php $isActive = false; @endphp
-                      @endforeach
-                  </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
-              </div>
-          </div>
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @php
+                $chunks = $products->chunk(8); // Setiap slide punya 8 produk
+                $isActive = true;
+            @endphp
+
+            @foreach ($chunks as $chunk)
+                <div class="carousel-item {{ $isActive ? 'active' : '' }}">
+                    <div class="container">
+                        @php $rows = $chunk->chunk(4); @endphp <!-- Bagi menjadi 2 baris -->
+                        @foreach ($rows as $row)
+                            <div class="row px-xl-5 px-sm-4 px-3 mb-3">
+                                @foreach ($row as $product)
+                                    <div class="col-3 px-1">
+                                        <div class="card shadow-sm border-0 product-card"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modal-default"
+                                            data-name="{{ $product->name }}"
+                                            data-image="{{ asset('storage/' . $product->image) }}"
+                                            data-price="Rp {{ number_format($product->price, 0, ',', '.') }},-"
+                                            data-stock="{{ $product->stock }}"
+                                            data-description="{{ $product->description }}">
+                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-100 border-radius-lg">
+                                            <div class="card-body text-center">
+                                                <h6 class="text-dark font-weight-bold mb-1">{{ $product->name }}</h6>
+                                                <p class="text-muted mb-1">Stock: {{ $product->stock }}</p>
+                                                <p class="text-success font-weight-bold">Rp {{ number_format($product->price, 0, ',', '.') }},-</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                @php $isActive = false; @endphp
+            @endforeach
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
+
 
           
 
@@ -158,23 +180,11 @@
                 </button>
             </div>
 
-            <div class="modal-body">
-            <img id="modalProductImage" src="" alt="Product Image" class="img-fluid mb-3 text-center">
+            <div class="modal-body text-center">
+            <img id="modalProductImage" src="" alt="Product Image" class="img-fluid mb-3">
+            <p id="modalProductPrice" class="text-success font-weight-bold"></p>
+            <p id="modalProductDescription" class="text-muted"></p>
 
-            <table class="table table-bordered">
-              <tr>
-                <th>Stok</th>
-                <th id="modalProductStock" class="text-success font-weight-bold"></th>
-              </tr>
-              <tr>
-                <td>Nama Barang</td>
-                <td id="modalProductPrice" class="text-success font-weight-bold"></td>
-              </tr>
-              <tr>
-                <td>Keterangan</td>
-                <td id="modalProductDescription" class="text-muted"></td>
-              </tr>
-            </table>
             </div>
 
             <div class="modal-footer">
@@ -196,13 +206,11 @@
             var name = $(this).data('name');
             var image = $(this).data('image');
             var price = $(this).data('price');
-            var stock = $(this).data('stock');
             var description = $(this).data('description');
 
             $('#modalProductName').text(name);
             $('#modalProductImage').attr('src', image);
             $('#modalProductPrice').text(price);
-            $('#modalProductStock').text(stock);
             $('#modalProductDescription').text(description);
         });
     });
