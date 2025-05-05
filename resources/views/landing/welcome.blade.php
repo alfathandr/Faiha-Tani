@@ -146,8 +146,7 @@
     </div>
 
 
-   <!-- Modal -->
-<div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
@@ -159,31 +158,33 @@
             </div>
 
             <div class="modal-body">
-            <img id="modalProductImage" src="" alt="Product Image" class="img-fluid mb-3 text-center">
+                <img id="modalProductImage" src="" alt="Product Image" class="img-fluid mb-3 text-center">
 
-            <table class="table table-bordered">
-              <tr>
-                <th>Stok</th>
-                <th id="modalProductStock" class="text-success font-weight-bold"></th>
-              </tr>
-              <tr>
-                <td>Nama Barang</td>
-                <td id="modalProductPrice" class="text-success font-weight-bold"></td>
-              </tr>
-              <tr>
-                <td>Keterangan</td>
-                <td id="modalProductDescription" class="text-muted"></td>
-              </tr>
-            </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Stok</th>
+                            <th id="modalProductStock" class="text-success font-weight-bold"></th>
+                        </tr>
+                        <tr>
+                            <td>Nama Barang</td>
+                            <td id="modalProductPrice" class="text-success font-weight-bold"></td>
+                        </tr>
+                        <tr>
+                            <td>Keterangan</td>
+                            <td class="text-muted whitespace-wrap"><text id="modalProductDescription" class="text-success"></text></td>
+                        </tr>
+                    </table>
+                </div>
+
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
 </div>
-
 
 
   </main>
