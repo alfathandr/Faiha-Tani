@@ -102,7 +102,7 @@
                                 <td>{{ $entry->id }}</td>
                                 <td>{{ $entry->product->name }}</td>
                                 <td>{{ $entry->quantity }}</td>
-                                <td>Rp {{ number_format($entry->price, 0, ',', '.') }}</td>
+                                <td>Rp {{ number_format($entry->price, 0, ',', '.') }},-</td>
                                 <td>{{ $entry->created_at }}</td>
                             </tr>
                         @endforeach
@@ -132,7 +132,7 @@
                                 <td>{{ $exit->id }}</td>
                                 <td>{{ $exit->product->name }}</td>
                                 <td>{{ $exit->quantity }}</td>
-                                <td>Rp {{ number_format($exit->price, 0, ',', '.') }}</td>
+                                <td>Rp {{ number_format($exit->price, 0, ',', '.') }},-</td>
                                 <td>{{ $exit->created_at }}</td>
                             </tr>
                         @endforeach
@@ -163,7 +163,7 @@
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
-                                    <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                                    <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                     <td>{{ $product->stock }}</td>
                                 </tr>
                             @endforeach
