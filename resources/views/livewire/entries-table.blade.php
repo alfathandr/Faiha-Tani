@@ -68,7 +68,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>Rp. {{ number_format($product->price, 0, ',', '.') }}</td>
+                                                <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                                 <td class="text-center">{{ $product->stock }}</td>
                                                 <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
                                                 <td class="text-center">
