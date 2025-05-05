@@ -78,7 +78,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>Rp. {{ number_format($transaction->product->price, 0, ',', '.') }}</td>
+                                        <td>Rp {{ number_format($transaction->product->price, 0, ',', '.') }},-</td>
                                         <td class="text-center">{{ $transaction->quantity }}</td>
                                         <td class="text-center">
                                             <span class="badge {{ $transaction->type == 'Masuk' ? 'bg-success' : 'bg-danger' }}">{{ $transaction->type }}</span>
