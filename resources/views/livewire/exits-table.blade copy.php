@@ -44,8 +44,6 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tersedia</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Terjual</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
@@ -64,12 +62,10 @@
                                             </div>
                                         </td>
                                         <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
-                                        <td>{{ $product->description }}</td>
-                                        <td class="text-center">{{ $product->supplier }}</td>
                                         <td class="text-center">{{ $product->stock }}</td>
                                         <td class="align-middle text-center">
                                             <div class="form-group pt-2">
-                                                <input class="form-control w-100" type="number"
+                                                <input class="form-control w-35 mx-auto" type="number"
                                                     wire:model.defer="exitQuantities.{{ $product->id }}"
                                                     min="1" max="{{ $product->stock }}">
                                             </div>

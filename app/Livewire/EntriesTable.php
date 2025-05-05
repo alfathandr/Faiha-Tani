@@ -12,7 +12,7 @@ class EntriesTable extends Component
 {
     use WithFileUploads;
 
-    public $name, $description, $price, $stock, $image;
+    public $name, $description, $supplier, $price, $stock, $image;
     public $selectedProduct;
     public $showEditForm = false;
     public $showAddForm = false;
@@ -21,12 +21,19 @@ class EntriesTable extends Component
     public $productNameToDelete;
     public $search = '';
 
+    public $sortBy = 'name';
+    public $sortDirection = 'asc';
+  
+
     protected $rules = [
         'name' => 'required|string|max:255',
+        'supplier' => 'nullable|string',
         'description' => 'nullable|string',
         'price' => 'required|numeric|min:0',
         'stock' => 'required|integer|min:0',
         'image' => 'image|max:2048'
+        
+
     ];
 
     public function addProduct()
@@ -34,6 +41,7 @@ class EntriesTable extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'supplier' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'image|max:2048' // max 2MB
@@ -49,6 +57,7 @@ class EntriesTable extends Component
             $product = Product::create([
                 'name' => $this->name,
                 'description' => $this->description,
+                'supplier' => $this->supplier,
                 'price' => $this->price,
                 'stock' => $this->stock,
                 'image' => $imagePath
@@ -77,6 +86,7 @@ class EntriesTable extends Component
         $this->selectedProduct = Product::findOrFail($id);
         $this->name = $this->selectedProduct->name;
         $this->description = $this->selectedProduct->description;
+        $this->supplier = $this->selectedProduct->supplier;
         $this->price = $this->selectedProduct->price;
         $this->stock = $this->selectedProduct->stock;
         $this->showEditForm = true;
@@ -88,6 +98,7 @@ class EntriesTable extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'supplier' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|max:2048' // max 2MB
@@ -114,6 +125,7 @@ class EntriesTable extends Component
             $this->selectedProduct->update([
                 'name' => $this->name,
                 'description' => $this->description,
+                'supplier' => $this->supplier,
                 'price' => $this->price,
                 'stock' => $this->stock,
                 'image' => $this->selectedProduct->image,
@@ -182,27 +194,32 @@ class EntriesTable extends Component
 
     private function resetForm()
     {
-        $this->reset(['name', 'description', 'price', 'stock', 'image', 'selectedProduct', 'showEditForm', 'showAddForm']);
+        $this->reset(['name', 'description', 'supplier', 'price', 'stock', 'image', 'selectedProduct', 'showEditForm', 'showAddForm']);
     }
 
-    // public function render()
-    // {
-    //     return view('livewire.entries-table', [
-    //         'products' => Product::latest()->get(),
-    //     ]);
-    // }
+
+    public function sortBy($field)
+    {
+        if ($this->sortBy === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
 
     public function render()
     {
         $products = Product::query()
             ->when($this->search, function ($query) {
-                return $query->where('name', 'like', '%' . $this->search . '%'); // Pencarian berdasarkan nama produk
+                return $query->where('name', 'like', '%' . $this->search . '%');
             })
-            ->latest()
+            ->orderBy($this->sortBy) 
             ->get();
 
         return view('livewire.entries-table', [
             'products' => $products,
         ]);
     }
+
 }

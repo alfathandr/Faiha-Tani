@@ -75,7 +75,15 @@
                                 <div class="row px-xl-5 px-sm-4 px-3">
                                     @foreach ($chunk as $product)
                                         <div class="col-3 px-1">
-                                            <div class="card shadow-sm border-0">
+                                          <div class="card shadow-sm border-0 product-card"
+                                              data-bs-toggle="modal"
+                                              data-bs-target="#modal-default"
+                                              data-name="{{ $product->name }}"
+                                              data-image="{{ asset('storage/' . $product->image) }}"
+                                              data-price="Rp {{ number_format($product->price, 0, ',', '.') }},-"
+                                              data-stock="{{ $product->stock }}"
+                                              data-description="{{ $product->description }}">
+
                                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-100 border-radius-lg">
                                                 <div class="card-body text-center">
                                                     <h6 class="text-dark font-weight-bold mb-1">{{ $product->name }}</h6>
@@ -91,7 +99,6 @@
                         @endforeach
                     </div>
 
-                    <!-- Tombol Navigasi -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     </button>
@@ -153,7 +160,59 @@
         </div>
       </div>
     </div>
+
+
+   <!-- Modal -->
+<div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title" id="modalProductName">Product Title</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body text-center">
+            <img id="modalProductImage" src="" alt="Product Image" class="img-fluid mb-3">
+            <p id="modalProductPrice" class="text-success font-weight-bold"></p>
+            <p id="modalProductDescription" class="text-muted"></p>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
   </main>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+        $('.product-card').on('click', function () {
+            var name = $(this).data('name');
+            var image = $(this).data('image');
+            var price = $(this).data('price');
+            var description = $(this).data('description');
+
+            $('#modalProductName').text(name);
+            $('#modalProductImage').attr('src', image);
+            $('#modalProductPrice').text(price);
+            $('#modalProductDescription').text(description);
+        });
+    });
+</script>
+
+
+
+
 
   <script>
     function initMap() {

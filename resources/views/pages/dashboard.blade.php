@@ -7,6 +7,4 @@
       <livewire:report-mk-chart /> 
 
 
-      
-
 @endsection

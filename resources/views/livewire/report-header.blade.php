@@ -7,7 +7,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Barang Tersedia
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Barang Tersedia
                     </p>
                     <h5 class="font-weight-bolder">
                       {{ $totalProducts }}
@@ -29,7 +29,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Barang Masuk</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Barang Masuk</p>
                     <h5 class="font-weight-bolder">
                       {{ $totalEntries }}
                     </h5>
@@ -50,7 +50,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Barang keluar</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Barang keluar</p>
                     <h5 class="font-weight-bolder">
                       {{ $totalExits }}
                     </h5>

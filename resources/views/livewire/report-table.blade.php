@@ -60,6 +60,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tersedia</th>
@@ -79,6 +80,7 @@
                                             </div>
                                         </td>
                                         <td>Rp {{ number_format($transaction->product->price, 0, ',', '.') }},-</td>
+                                        <td class="text-center">{{ $transaction->product->supplier  }}</td>
                                         <td class="text-center">{{ $transaction->quantity }}</td>
                                         <td class="text-center">
                                             <span class="badge {{ $transaction->type == 'Masuk' ? 'bg-success' : 'bg-danger' }}">{{ $transaction->type }}</span>

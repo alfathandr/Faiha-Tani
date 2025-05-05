@@ -48,39 +48,42 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tersedia</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Update pada</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('id')" style="cursor: pointer;">No</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('name')" style="cursor: pointer;">Nama Barang</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" wire:click="sortBy('price')" style="cursor: pointer;">Harga</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text" wire:click="sortBy('description')" style="cursor: pointer;">Deskripsi</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" wire:click="sortBy('supplier')" style="cursor: pointer;">Pemasok</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('stock')" style="cursor: pointer;">Stok</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('updated_at')" style="cursor: pointer;">Update pada</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse ($products as $product)
-                                            <tr>
-                                                <td class="text-center">{{ $loop->iteration }}</td>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <img src="{{ asset('storage/' . $product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
-                                                        <div>
-                                                            <h6 class="mb-0 text-sm">{{ $product->name }}</h6>
-                                                        </div>
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <img src="{{ asset('storage/' . $product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
+                                                    <div>
+                                                        <h6 class="mb-0 text-sm">{{ $product->name }}</h6>
                                                     </div>
-                                                </td>
-                                                <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
-                                                <td class="text-center">{{ $product->stock }}</td>
-                                                <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-sm btn-primary" type="button" wire:click="update({{ $product->id }})">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" type="button" wire:click="confirmDelete({{ $product->id }})">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </td>
+                                            <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
+                                            <td class="wrap-text">{{ $product->description }}</td>
+                                            <td>{{ $product->supplier }}</td>
+                                            <td class="text-center">{{ $product->stock }}</td>
+                                            <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-primary" type="button" wire:click="update({{ $product->id }})">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" type="button" wire:click="confirmDelete({{ $product->id }})">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
                                         @empty
                                             <tr>
                                                 <td colspan="5" class="text-center text-secondary py-3">Data barang belum tersedia.</td>
@@ -104,24 +107,29 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label>Nama</label>
-                                    <input class="form-control" type="text" wire:model="name">
+                                    <input class="form-control" type="text" wire:model="name" required>
                                     @error('name') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
+                                    <label>Pemasok</label>
+                                    <input class="form-control" type="text" wire:model="supplier">
+                                    @error('supplier') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
                                     <label>Harga</label>
-                                    <input class="form-control" type="number" wire:model="price">
+                                    <input class="form-control" type="number" wire:model="price" required>
                                     @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Jumlah</label>
-                                    <input class="form-control" type="number" wire:model="stock">
+                                    <input class="form-control" type="number" wire:model="stock" required>
                                     @error('stock') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gambar</label>
-                                    <input class="form-control" type="file" wire:model="image">
+                                    <input class="form-control" type="file" wire:model="image" required>
                                     @error('image') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12">
@@ -151,9 +159,13 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label>Nama</label>
                                     <input class="form-control" type="text" wire:model="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Pemasok</label>
+                                    <input class="form-control" type="text" wire:model="supplier" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Harga</label>

@@ -52,13 +52,6 @@ class ExitsTable extends Component
     }
 
     
-    // public function render()
-    // {
-    //     return view('livewire.exits-table', [
-    //         'products' => Product::latest()->get(),
-    //     ]);
-    // }
-
     public function render()
     {
         $products = Product::query()
