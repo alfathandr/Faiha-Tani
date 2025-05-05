@@ -61,7 +61,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>Rp. {{ number_format($product->price, 0, ',', '.') }}</td>
+                                        <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                         <td class="text-center">{{ $product->stock }}</td>
                                         <td class="align-middle text-center">
                                             <div class="form-group pt-2">
