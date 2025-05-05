@@ -80,7 +80,7 @@
                                                 <div class="card-body text-center">
                                                     <h6 class="text-dark font-weight-bold mb-1">{{ $product->name }}</h6>
                                                     <p class="text-muted mb-1">Stock: {{ $product->stock }}</p>
-                                                    <p class="text-success font-weight-bold">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                                    <p class="text-success font-weight-bold">Rp. {{ number_format($product->price, 0, ',', '.') }},-</p>
                                                 </div>
                                             </div>
                                         </div>
