@@ -29,14 +29,24 @@
                         <h6>Barang Keluar</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                            <div class="row align-items-cente px-4 pt-4">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="search" class="form-label">Cari Produk</label>
-                                        <input type="text" id="search" placeholder="Masukkan nama barang ... " wire:model.live.defer="search" class="form-control">
-                                    </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="px-4 mt-4">
+                                <div class="row align-items-center">
+                                <div class="row mb-3"> <div class="col-md-4"> <div class="form-group">
+                                    <label for="search" class="form-label">Cari Produk</label>
+                                    <input type="text" id="search" placeholder="Masukkan nama barang ... " wire:model.live.debounce.500ms="search" class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-4"> <div class="form-group">
+                                    <label for="filter" class="form-label">Filter</label>
+                                    <select class="form-control" wire:model.live.defer="sortColumn" wire:change="sortBy($event.target.value)" id="filter">
+                                        <option value="name">Nama</option>
+                                        <option value="price">Harga</option>
+                                        <option value="stock">Stok</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                             <thead>
@@ -46,7 +56,7 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tersedia</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Terjual</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                 </tr>

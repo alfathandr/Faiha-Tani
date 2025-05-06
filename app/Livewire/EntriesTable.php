@@ -21,8 +21,8 @@ class EntriesTable extends Component
     public $productNameToDelete;
     public $search = '';
 
-    public $sortBy = 'name';
-    public $sortDirection = 'asc';
+    public $sortColumn = 'name'; // Default pengurutan berdasarkan nama
+    public $sortDirection = 'asc'; // Default arah pengurutan ascending (A-Z)
   
 
     protected $rules = [
@@ -197,16 +197,16 @@ class EntriesTable extends Component
         $this->reset(['name', 'description', 'supplier', 'price', 'stock', 'image', 'selectedProduct', 'showEditForm', 'showAddForm']);
     }
 
-
-    public function sortBy($field)
+    public function sortBy($column)
     {
-        if ($this->sortBy === $field) {
+        if ($this->sortColumn === $column) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
-            $this->sortBy = $field;
+            $this->sortColumn = $column;
             $this->sortDirection = 'asc';
         }
     }
+
 
     public function render()
     {
@@ -214,12 +214,11 @@ class EntriesTable extends Component
             ->when($this->search, function ($query) {
                 return $query->where('name', 'like', '%' . $this->search . '%');
             })
-            ->orderBy($this->sortBy) 
+            ->orderBy($this->sortColumn, $this->sortDirection) // Tambahkan pengurutan
             ->get();
-
+    
         return view('livewire.entries-table', [
             'products' => $products,
         ]);
     }
-
 }

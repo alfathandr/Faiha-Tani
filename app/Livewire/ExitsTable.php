@@ -12,6 +12,10 @@ class ExitsTable extends Component
     public $exitQuantities = [];
     public $search = '';
 
+    public $sortColumn = 'name'; // Default pengurutan berdasarkan nama
+    public $sortDirection = 'asc'; // Default arah pengurutan ascending (A-Z)
+  
+
     public function removeStock($productId)
     {
         $product = Product::find($productId);
@@ -51,6 +55,17 @@ class ExitsTable extends Component
         }
     }
 
+    public function sortBy($column)
+    {
+        if ($this->sortColumn === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortColumn = $column;
+            $this->sortDirection = 'asc';
+        }
+    }
+
+
     
     public function render()
     {
@@ -58,7 +73,8 @@ class ExitsTable extends Component
             ->when($this->search, function ($query) {
                 return $query->where('name', 'like', '%' . $this->search . '%'); // Pencarian berdasarkan nama produk
             })
-            ->latest()
+
+            ->orderBy($this->sortColumn, $this->sortDirection) // Tambahkan pengurutan
             ->get();
 
         return view('livewire.exits-table', [

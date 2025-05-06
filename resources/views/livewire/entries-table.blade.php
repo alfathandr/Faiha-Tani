@@ -35,26 +35,35 @@
                             </button>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
-                        <div class="px-4 mt-4">
-                            <div class="row align-items-center">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="search" class="form-label">Cari Produk</label>
-                                        <input type="text" id="search" placeholder="Masukkan nama barang ... " wire:model.live.defer="search" class="form-control">
-                                    </div>
+                            <div class="px-4 mt-4">
+                                <div class="row align-items-center">
+                                <div class="row mb-3"> <div class="col-md-4"> <div class="form-group">
+                                    <label for="search" class="form-label">Cari Produk</label>
+                                    <input type="text" id="search" placeholder="Masukkan nama barang ... " wire:model.live.debounce.500ms="search" class="form-control">
                                 </div>
+                            </div>
+                            <div class="col-md-4"> <div class="form-group">
+                                    <label for="filter" class="form-label">Filter</label>
+                                    <select class="form-control" wire:model.live.defer="sortColumn" wire:change="sortBy($event.target.value)" id="filter">
+                                        <option value="name">Nama</option>
+                                        <option value="price">Harga</option>
+                                        <option value="stock">Stok</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                             </div>
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('id')" style="cursor: pointer;">No</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('name')" style="cursor: pointer;">Nama Barang</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" wire:click="sortBy('price')" style="cursor: pointer;">Harga</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text" wire:click="sortBy('description')" style="cursor: pointer;">Deskripsi</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" wire:click="sortBy('supplier')" style="cursor: pointer;">Pemasok</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('stock')" style="cursor: pointer;">Stok</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" wire:click="sortBy('updated_at')" style="cursor: pointer;">Update pada</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Deskripsi</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Pemasok</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Update pada</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                         </tr>
                                     </thead>
