@@ -42,31 +42,65 @@
                                     <input type="text" id="search" placeholder="Masukkan nama barang ... " wire:model.live.debounce.500ms="search" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-4"> <div class="form-group">
-                                    <label for="filter" class="form-label">Filter</label>
-                                    <select class="form-control" wire:model.live.defer="sortColumn" wire:change="sortBy($event.target.value)" id="filter">
-                                        <option value="name">Nama</option>
-                                        <option value="price">Harga</option>
-                                        <option value="stock">Stok</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
-                            </div>
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Deskripsi</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Pemasok</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Update pada</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-                                        </tr>
-                                    </thead>
+                                <thead>
+    <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('name')">
+            Nama Barang
+            @if ($sortColumn === 'name')
+                @if ($sortDirection === 'asc')
+                    <i class="fa fa-sort-up"></i>
+                @else
+                    <i class="fa fa-sort-down"></i>
+                @endif
+            @else
+                <i class="fa fa-sort"></i>
+            @endif
+        </th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('price')">
+            Harga
+            @if ($sortColumn === 'price')
+                @if ($sortDirection === 'asc')
+                    <i class="fa fa-sort-up"></i>
+                @else
+                    <i class="fa fa-sort-down"></i>
+                @endif
+            @else
+                <i class="fa fa-sort"></i>
+            @endif
+        </th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Deskripsi</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Pemasok</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('stock')">
+            Stok
+            @if ($sortColumn === 'stock')
+                @if ($sortDirection === 'asc')
+                    <i class="fa fa-sort-up"></i>
+                @else
+                    <i class="fa fa-sort-down"></i>
+                @endif
+            @else
+                <i class="fa fa-sort"></i>
+            @endif
+        </th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('updated_at')">
+            Update pada
+            @if ($sortColumn === 'updated_at')
+                @if ($sortDirection === 'asc')
+                    <i class="fa fa-sort-up"></i>
+                @else
+                    <i class="fa fa-sort-down"></i>
+                @endif
+            @else
+                <i class="fa fa-sort"></i>
+            @endif
+        </th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+    </tr>
+</thead>
                                     <tbody>
                                         @forelse ($products as $product)
                                         <tr>

@@ -214,7 +214,7 @@ class EntriesTable extends Component
             ->when($this->search, function ($query) {
                 return $query->where('name', 'like', '%' . $this->search . '%');
             })
-            ->orderBy($this->sortColumn, $this->sortDirection) // Tambahkan pengurutan
+            ->orderBy($this->sortColumn, $this->sortDirection)
             ->get();
     
         return view('livewire.entries-table', [

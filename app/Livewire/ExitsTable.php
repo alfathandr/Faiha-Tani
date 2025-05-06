@@ -74,7 +74,7 @@ class ExitsTable extends Component
                 return $query->where('name', 'like', '%' . $this->search . '%'); // Pencarian berdasarkan nama produk
             })
 
-            ->orderBy($this->sortColumn, $this->sortDirection) // Tambahkan pengurutan
+            ->orderBy($this->sortColumn, $this->sortDirection)
             ->get();
 
         return view('livewire.exits-table', [
