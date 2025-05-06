@@ -12,7 +12,7 @@
                         <!-- Informasi Total Produk & Penjualan di Kanan -->
                         <div class="col-4">
                             <h5 class="font-weight-bolder">Report</h5>
-                            <h6 class="text-uppercase font-weight-bold">Jumlah Total Produk: <strong class="text-dark"> {{ $totalProducts }}</strong></h6>
+                            <h6 class="text-uppercase font-weight-bold">Jumlah Total Barang: <strong class="text-dark"> {{ $totalProducts }}</strong></h6>
                             <h6 class="text-uppercase font-weight-bold">Jumlah Total Stok: <strong class="text-dark">{{ $totalStock }}</strong></h6>
                             <h6 class="text-uppercase font-weight-bold">Total Belum Terjual: <strong class="text-primary">Rp {{ number_format($totalPriceProducts, 0, ',', '.') }}</strong></h6>
                             <h6 class="text-uppercase font-weight-bold">Total Penjualan: <strong class="text-success">Rp {{ number_format($totalSales, 0, ',', '.') }}</strong></h6>

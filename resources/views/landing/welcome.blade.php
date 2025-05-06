@@ -58,7 +58,7 @@
             <div class="card-header text-center pt-4">
               <h5>Faiha Tani</h5>
               <p class="text-lead text-dark px-8 ">Faiha Tani adalah platform berbasis web yang dirancang untuk membantu pelaku usaha pertanian dalam mengelola suplai barang secara digital. Dengan fitur yang lengkap, aplikasi ini mempermudah pencatatan stok, pemantauan transaksi, serta manajemen distribusi barang agar bisnis tetap berjalan lancar dan efisien.</p>
-              <h5 class="pt-4">Produk Produk</h5>
+              <h5 class="pt-4">Produk</h5>
             </div>
 
             
