@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-auto">
             <div class="avatar avatar-xl position-relative">
-              <img src="../assets/img/user.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              <img src="../assets/img/user.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
             </div>
           </div>
           <div class="col-auto my-auto">

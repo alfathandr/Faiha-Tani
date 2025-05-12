@@ -130,7 +130,7 @@
                                             </div>
                                         </td>
                                         <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
-                                        <td>{{ $product->description }}</td>
+                                        <td style="white-space: normal; overflow-wrap: break-word;">{{ $product->description }}</td>
                                         <td class="text-center">{{ $product->supplier }}</td>
                                         <td class="text-center">{{ $product->supplier_contact }}</td>
                                         <td class="text-center">{{ $product->stock }}</td>
