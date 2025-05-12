@@ -100,6 +100,7 @@
                                                 <i class="fa fa-sort"></i>
                                             @endif
                                         </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kontak Pemasok</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('stock')">
                                             Stok
                                             @if ($sortColumn === 'stock')
