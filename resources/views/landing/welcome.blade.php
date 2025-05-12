@@ -167,14 +167,13 @@
                             <th id="modalProductStock" class="text-success font-weight-bold"></th>
                         </tr>
                         <tr>
-                            <td>Nama Barang</td>
+                            <td>Harga Barang</td>
                             <td id="modalProductPrice" class="text-success font-weight-bold"></td>
                         </tr>
-                        <tr>
-                            <td>Keterangan</td>
-                            <td class="whitespace-wrap"><text id="modalProductDescription" class="text-success"></text></td>
-                        </tr>
                     </table>
+
+                    <h6>Keterangan</h6>
+                    <span id="modalProductDescription"></span>
                 </div>
 
             </div>
