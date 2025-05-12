@@ -92,7 +92,7 @@
                             <th><i class="fas fa-hashtag icon"></i> ID</th>
                             <th><i class="fas fa-tag icon"></i> Nama Produk</th>
                             <th><i class="fas fa-truck icon"></i> Pemasok</th>
-                            <th><i class="fas fa-headphones icon"></i> Kontak Pemasok</th>
+                            <th><i class="fas fa-address-book icon"></i> Kontak Pemasok</th>
                             <th><i class="fas fa-plus-circle icon"></i> Kuantitas</th>
                             <th><i class="fas fa-money-bill-wave icon"></i> Harga</th>
                             <th><i class="fas fa-calendar-alt icon"></i> Tanggal Masuk</th>
@@ -126,7 +126,7 @@
                             <th><i class="fas fa-hashtag icon"></i> ID</th>
                             <th><i class="fas fa-tag icon"></i> Nama Produk</th>
                             <th><i class="fas fa-truck icon"></i> Pemasok</th>
-                            <th><i class="fas fa-headphones icon"></i> Kontak Pemasok</th>
+                            <th><i class="fas fa-address-book icon"></i> Kontak Pemasok</th>
                             <th><i class="fas fa-minus-circle icon"></i> Kuantitas</th>
                             <th><i class="fas fa-money-bill-wave icon"></i> Harga</th>
                             <th><i class="fas fa-calendar-alt icon"></i> Tanggal Keluar</th>
