@@ -131,6 +131,7 @@
                                         <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                         <td>{{ $product->description }}</td>
                                         <td class="text-center">{{ $product->supplier }}</td>
+                                        <td class="text-center">{{ $product->supplier_contact }}</td>
                                         <td class="text-center">{{ $product->stock }}</td>
                                         <td class="align-middle text-center">
                                             <div class="form-group pt-2">

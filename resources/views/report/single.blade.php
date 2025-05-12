@@ -91,6 +91,8 @@
                         <tr>
                             <th><i class="fas fa-hashtag icon"></i> ID</th>
                             <th><i class="fas fa-tag icon"></i> Nama Produk</th>
+                            <th><i class="fas fa-truck icon"></i> Pemasok</th>
+                            <th><i class="fas fa-headphones icon"></i> Kontak Pemasok</th>
                             <th><i class="fas fa-plus-circle icon"></i> Kuantitas</th>
                             <th><i class="fas fa-money-bill-wave icon"></i> Harga</th>
                             <th><i class="fas fa-calendar-alt icon"></i> Tanggal Masuk</th>
@@ -101,6 +103,8 @@
                             <tr>
                                 <td>{{ $entry->id }}</td>
                                 <td>{{ $entry->product->name }}</td>
+                                <td>{{ $entry->product->supplier }}</td>
+                                <td>{{ $entry->product->supplier_contact }}</td>
                                 <td>{{ $entry->quantity }}</td>
                                 <td>Rp {{ number_format($entry->price, 0, ',', '.') }},-</td>
                                 <td>{{ $entry->created_at }}</td>
@@ -121,6 +125,8 @@
                         <tr>
                             <th><i class="fas fa-hashtag icon"></i> ID</th>
                             <th><i class="fas fa-tag icon"></i> Nama Produk</th>
+                            <th><i class="fas fa-truck icon"></i> Pemasok</th>
+                            <th><i class="fas fa-headphones icon"></i> Kontak Pemasok</th>
                             <th><i class="fas fa-minus-circle icon"></i> Kuantitas</th>
                             <th><i class="fas fa-money-bill-wave icon"></i> Harga</th>
                             <th><i class="fas fa-calendar-alt icon"></i> Tanggal Keluar</th>
@@ -131,6 +137,8 @@
                             <tr>
                                 <td>{{ $exit->id }}</td>
                                 <td>{{ $exit->product->name }}</td>
+                                <td>{{ $exit->product->supplier }}</td>
+                                <td>{{ $exit->product->supplier_contact }}</td>
                                 <td>{{ $exit->quantity }}</td>
                                 <td>Rp {{ number_format($exit->price, 0, ',', '.') }},-</td>
                                 <td>{{ $exit->created_at }}</td>
