@@ -8,7 +8,7 @@
           </ol>
           <h6 class="font-weight-bolder text-white mb-0">@yield('title')</h6>          
         </nav>
-        <!-- Icon Sidenav Toggler (Hanya muncul di tablet dan mobile) -->
+      
         <a href="javascript:;" class="nav-link text-white p-0 d-none d-md-block d-lg-none" id="iconNavbarSidenav">
           <div class="sidenav-toggler-inner">
             <i class="sidenav-toggler-line bg-white"></i>

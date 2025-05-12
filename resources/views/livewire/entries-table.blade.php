@@ -46,61 +46,62 @@
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
                                 <thead>
-    <tr>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('name')">
-            Nama Barang
-            @if ($sortColumn === 'name')
-                @if ($sortDirection === 'asc')
-                    <i class="fa fa-sort-up"></i>
-                @else
-                    <i class="fa fa-sort-down"></i>
-                @endif
-            @else
-                <i class="fa fa-sort"></i>
-            @endif
-        </th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('price')">
-            Harga
-            @if ($sortColumn === 'price')
-                @if ($sortDirection === 'asc')
-                    <i class="fa fa-sort-up"></i>
-                @else
-                    <i class="fa fa-sort-down"></i>
-                @endif
-            @else
-                <i class="fa fa-sort"></i>
-            @endif
-        </th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Deskripsi</th>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Pemasok</th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('stock')">
-            Stok
-            @if ($sortColumn === 'stock')
-                @if ($sortDirection === 'asc')
-                    <i class="fa fa-sort-up"></i>
-                @else
-                    <i class="fa fa-sort-down"></i>
-                @endif
-            @else
-                <i class="fa fa-sort"></i>
-            @endif
-        </th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('updated_at')">
-            Update pada
-            @if ($sortColumn === 'updated_at')
-                @if ($sortDirection === 'asc')
-                    <i class="fa fa-sort-up"></i>
-                @else
-                    <i class="fa fa-sort-down"></i>
-                @endif
-            @else
-                <i class="fa fa-sort"></i>
-            @endif
-        </th>
-        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-    </tr>
-</thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('name')">
+                                            Nama Barang
+                                            @if ($sortColumn === 'name')
+                                                @if ($sortDirection === 'asc')
+                                                    <i class="fa fa-sort-up"></i>
+                                                @else
+                                                    <i class="fa fa-sort-down"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-sort"></i>
+                                            @endif
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('price')">
+                                            Harga
+                                            @if ($sortColumn === 'price')
+                                                @if ($sortDirection === 'asc')
+                                                    <i class="fa fa-sort-up"></i>
+                                                @else
+                                                    <i class="fa fa-sort-down"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-sort"></i>
+                                            @endif
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Deskripsi</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Pemasok</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kontak Pemasok</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('stock')">
+                                            Stok
+                                            @if ($sortColumn === 'stock')
+                                                @if ($sortDirection === 'asc')
+                                                    <i class="fa fa-sort-up"></i>
+                                                @else
+                                                    <i class="fa fa-sort-down"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-sort"></i>
+                                            @endif
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('updated_at')">
+                                            Update pada
+                                            @if ($sortColumn === 'updated_at')
+                                                @if ($sortDirection === 'asc')
+                                                    <i class="fa fa-sort-up"></i>
+                                                @else
+                                                    <i class="fa fa-sort-down"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-sort"></i>
+                                            @endif
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                                    </tr>
+                                </thead>
                                     <tbody>
                                         @forelse ($products as $product)
                                         <tr>
@@ -116,6 +117,7 @@
                                             <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                             <td class="wrap-text">{{ $product->description }}</td>
                                             <td>{{ $product->supplier }}</td>
+                                            <td>{{ $product->supplier_contact }}</td>
                                             <td class="text-center">{{ $product->stock }}</td>
                                             <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
                                             <td class="text-center">
@@ -150,15 +152,10 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-16">
                                     <label>Nama Barang</label>
                                     <input class="form-control" type="text" wire:model="name" required>
                                     @error('name') <span class="text-danger text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Pemasok</label>
-                                    <input class="form-control" type="text" wire:model="supplier">
-                                    @error('supplier') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Harga</label>
@@ -180,11 +177,20 @@
                                     <textarea class="form-control" rows="5" wire:model="description"></textarea>
                                     @error('description') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
+                                <div class="col-md-6">
+                                    <label>Pemasok</label>
+                                    <input class="form-control" type="text" wire:model="supplier">
+                                    @error('supplier') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Kontak Pemasok</label>
+                                    <input class="form-control" type="text" wire:model="supplier_contact">
+                                    @error('supplier_contact') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
                                 <div class="col-md-12 mt-3">
                                     <button class="btn btn-dark btn-lg w-100" wire:click="addProduct">
                                         Masukkan Data
                                     </button>
-
                                 </div>
                             </div>
                         </div>
@@ -202,13 +208,9 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label>Nama Barang</label>
                                     <input class="form-control" type="text" wire:model="name" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Pemasok</label>
-                                    <input class="form-control" type="text" wire:model="supplier" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Harga</label>
@@ -225,6 +227,16 @@
                                 <div class="col-md-12">
                                     <label>Deskripsi</label> 
                                     <textarea class="form-control" rows="5" wire:model="description" required></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Pemasok</label>
+                                    <input class="form-control" type="text" wire:model="supplier">
+                                    @error('supplier') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Kontak Pemasok</label>
+                                    <input class="form-control" type="text" wire:model="supplier_contact">
+                                    @error('supplier_contact') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12 mt-3">
                                 <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct"

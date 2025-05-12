@@ -17,6 +17,8 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-dark position-absolute w-100"></div>
+  <!-- <div class="min-height-300 bg-dark position-absolute w-100" style="background-image: url('../assets/img/header.jpg'); background-size: cover;"></div> -->
+  <div class="min-height-300 bg-dark position-absolute w-100" style="background-image: url('../assets/img/header1.png'); background-size: cover; opacity: 0.3;"></div>
   @include('include.sidebar')
 
   <main class="main-content position-relative border-radius-lg ">
@@ -26,9 +28,6 @@
     @yield('content')
 
     @include('include.footer')
-
-
-
 
     </div>
   </main>

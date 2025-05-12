@@ -12,7 +12,7 @@ class EntriesTable extends Component
 {
     use WithFileUploads;
 
-    public $name, $description, $supplier, $price, $stock, $image;
+    public $name, $description, $supplier, $supplier_contact, $price, $stock, $image;
     public $selectedProduct;
     public $showEditForm = false;
     public $showAddForm = false;
@@ -28,6 +28,7 @@ class EntriesTable extends Component
     protected $rules = [
         'name' => 'required|string|max:255',
         'supplier' => 'nullable|string',
+        'supplier_contact' => 'nullable|string',
         'description' => 'nullable|string',
         'price' => 'required|numeric|min:0',
         'stock' => 'required|integer|min:0',
@@ -42,6 +43,7 @@ class EntriesTable extends Component
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'supplier' => 'nullable|string',
+            'supplier_contact' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'image|max:2048' // max 2MB
@@ -58,6 +60,7 @@ class EntriesTable extends Component
                 'name' => $this->name,
                 'description' => $this->description,
                 'supplier' => $this->supplier,
+                'supplier_contact' => $this->supplier_contact,
                 'price' => $this->price,
                 'stock' => $this->stock,
                 'image' => $imagePath
@@ -87,6 +90,7 @@ class EntriesTable extends Component
         $this->name = $this->selectedProduct->name;
         $this->description = $this->selectedProduct->description;
         $this->supplier = $this->selectedProduct->supplier;
+        $this->supplier_contact = $this->selectedProduct->supplier_contact;
         $this->price = $this->selectedProduct->price;
         $this->stock = $this->selectedProduct->stock;
         $this->showEditForm = true;
@@ -99,6 +103,7 @@ class EntriesTable extends Component
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'supplier' => 'nullable|string',
+            'supplier_contact' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|max:2048' // max 2MB
@@ -126,6 +131,7 @@ class EntriesTable extends Component
                 'name' => $this->name,
                 'description' => $this->description,
                 'supplier' => $this->supplier,
+                'supplier_contact' => $this->supplier_contact,
                 'price' => $this->price,
                 'stock' => $this->stock,
                 'image' => $this->selectedProduct->image,
@@ -194,7 +200,7 @@ class EntriesTable extends Component
 
     private function resetForm()
     {
-        $this->reset(['name', 'description', 'supplier', 'price', 'stock', 'image', 'selectedProduct', 'showEditForm', 'showAddForm']);
+        $this->reset(['name', 'description', 'supplier', 'supplier_contact', 'price', 'stock', 'image', 'selectedProduct', 'showEditForm', 'showAddForm']);
     }
 
     public function sortBy($column)
