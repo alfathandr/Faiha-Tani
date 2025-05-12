@@ -110,7 +110,7 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <img src="{{ asset('storage/' . $product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
                                                     <div>
-                                                        <h6 class="mb-0 text-sm">{{ $product->name }}</h6>
+                                                        <h6 class="mb-0 text-sm" style="white-space: normal; overflow-wrap: break-word;">{{ $product->name }}</h6>
                                                     </div>
                                                 </div>
                                             </td>

@@ -76,30 +76,8 @@
                                                 <i class="fa fa-sort"></i>
                                             @endif
                                         </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('description')">
-                                            Deskripsi
-                                            @if ($sortColumn === 'description')
-                                                @if ($sortDirection === 'asc')
-                                                    <i class="fa fa-sort-up"></i>
-                                                @else
-                                                    <i class="fa fa-sort-down"></i>
-                                                @endif
-                                            @else
-                                                <i class="fa fa-sort"></i>
-                                            @endif
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('supplier')">
-                                            Pemasok
-                                            @if ($sortColumn === 'supplier')
-                                                @if ($sortDirection === 'asc')
-                                                    <i class="fa fa-sort-up"></i>
-                                                @else
-                                                    <i class="fa fa-sort-down"></i>
-                                                @endif
-                                            @else
-                                                <i class="fa fa-sort"></i>
-                                            @endif
-                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kontak Pemasok</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('stock')">
                                             Stok
@@ -125,7 +103,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <img src="{{ asset('storage/' . $product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
                                                 <div>
-                                                    <h6 class="mb-0 text-sm">{{ $product->name }}</h6>
+                                                    <h6 class="mb-0 text-sm" style="white-space: normal; overflow-wrap: break-word;">{{ $product->name }}</h6>
                                                 </div>
                                             </div>
                                         </td>
