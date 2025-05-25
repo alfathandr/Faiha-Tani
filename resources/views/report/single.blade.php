@@ -103,8 +103,22 @@
                             <tr>
                                 <td>{{ $entry->id }}</td>
                                 <td>{{ $entry->product->name }}</td>
-                                <td>{{ $entry->product->supplier }}</td>
-                                <td>{{ $entry->product->supplier_contact }}</td>
+                                 {{-- Menampilkan nama supplier --}}
+                                 <td>
+                                    @if ($entry->product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                        {{ $entry->product->supplier->name }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                {{-- Menampilkan kontak supplier --}}
+                                <td>
+                                    @if ($entry->product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                        {{ $entry->product->supplier->contact }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td>{{ $entry->quantity }}</td>
                                 <td>Rp {{ number_format($entry->price, 0, ',', '.') }},-</td>
                                 <td>{{ $entry->created_at }}</td>
@@ -137,8 +151,22 @@
                             <tr>
                                 <td>{{ $exit->id }}</td>
                                 <td>{{ $exit->product->name }}</td>
-                                <td>{{ $exit->product->supplier }}</td>
-                                <td>{{ $exit->product->supplier_contact }}</td>
+                                {{-- Menampilkan nama supplier --}}
+                                <td>
+                                    @if ($exit->product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                        {{ $exit->product->supplier->name }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                {{-- Menampilkan kontak supplier --}}
+                                <td>
+                                    @if ($exit->product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                        {{ $exit->product->supplier->contact }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td>{{ $exit->quantity }}</td>
                                 <td>Rp {{ number_format($exit->price, 0, ',', '.') }},-</td>
                                 <td>{{ $exit->created_at }}</td>
