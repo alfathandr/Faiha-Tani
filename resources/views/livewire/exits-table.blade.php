@@ -77,8 +77,8 @@
                                             @endif
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kontak Pemasok</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kontak Pemasok</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('stock')">
                                             Stok
                                             @if ($sortColumn === 'stock')
@@ -109,8 +109,22 @@
                                         </td>
                                         <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                         <td style="white-space: normal; overflow-wrap: break-word;">{{ $product->description }}</td>
-                                        <td class="text-center">{{ $product->supplier }}</td>
-                                        <td class="text-center">{{ $product->supplier_contact }}</td>
+                                            {{-- Menampilkan nama supplier --}}
+                                            <td>
+                                                @if ($product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                                    {{ $product->supplier->name }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            {{-- Menampilkan kontak supplier --}}
+                                            <td>
+                                                @if ($product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                                    {{ $product->supplier->contact }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
                                         <td class="text-center">{{ $product->stock }}</td>
                                         <td class="align-middle text-center">
                                             <div class="form-group pt-2">

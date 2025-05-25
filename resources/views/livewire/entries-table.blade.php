@@ -76,7 +76,7 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Pemasok</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kontak Pemasok</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('stock')">
-                                            Stok
+                                            Jumlah
                                             @if ($sortColumn === 'stock')
                                                 @if ($sortDirection === 'asc')
                                                     <i class="fa fa-sort-up"></i>
@@ -177,7 +177,7 @@
                                     @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Stok</label>
+                                    <label>Jumlah</label>
                                     <input class="form-control" type="number" wire:model="stock" required>
                                     @error('stock') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
@@ -233,7 +233,7 @@
                                     @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Stok</label>
+                                    <label>Jumlah</label>
                                     <input class="form-control" type="number" wire:model="stock">
                                     @error('stock') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
@@ -248,7 +248,7 @@
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Pilih Supplier</label>
+                                    <label>Pilih Pemasok</label>
                                     <select class="form-control" wire:model="supplier_id">
                                         <option value="">-- Pilih Supplier --</option>
                                         @foreach($suppliersList as $supplier)

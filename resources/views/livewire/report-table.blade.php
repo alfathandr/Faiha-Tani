@@ -39,7 +39,7 @@
                                         <input type="date" id="start-date" wire:model.live.defer="startDate" class="form-control">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-auto">
                                     <span class="fw-bold">-</span>
                                 </div>
@@ -60,7 +60,8 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kontak</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
@@ -69,28 +70,69 @@
                             </thead>
                             <tbody>
                                 @forelse ($transactions as $transaction)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+                                            {{-- Pastikan ada product dan image sebelum menampilkan --}}
+                                            @if ($transaction->product && $transaction->product->image)
                                                 <img src="{{ asset('storage/' . $transaction->product->image) }}" class="avatar avatar-sm me-3" alt="{{ $transaction->product->name }}">
-                                                <div>
-                                                    <h6 class="mb-0 text-sm">{{ $transaction->product->name }}</h6>
-                                                </div>
+                                            @else
+                                                {{-- Gambar placeholder jika tidak ada gambar atau produk tidak ditemukan --}}
+                                                <img src="{{ asset('path/to/placeholder-image.jpg') }}" class="avatar avatar-sm me-3" alt="No Image">
+                                            @endif
+                                            <div>
+                                                {{-- Pastikan ada product sebelum menampilkan nama --}}
+                                                <h6 class="mb-0 text-sm">
+                                                    @if ($transaction->product)
+                                                        {{ $transaction->product->name }}
+                                                    @else
+                                                        Produk Tidak Ditemukan
+                                                    @endif
+                                                </h6>
                                             </div>
-                                        </td>
-                                        <td>Rp {{ number_format($transaction->product->price, 0, ',', '.') }},-</td>
-                                        <td class="text-center">{{ $transaction->product->supplier  }}</td>
-                                        <td class="text-center">{{ $transaction->quantity }}</td>
-                                        <td class="text-center">
-                                            <span class="badge {{ $transaction->type == 'Masuk' ? 'bg-success' : 'bg-danger' }}">{{ $transaction->type }}</span>
-                                        </td>
-                                        <td class="text-center">{{ $transaction->product->stock }}</td>
-                                        <td class="text-center">{{ $transaction->created_at->format('d M Y H:i') }}</td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if ($transaction->product)
+                                            Rp {{ number_format($transaction->product->price, 0, ',', '.') }},-
+                                        @else
+                                            Rp 0,-
+                                        @endif
+                                    </td>
+                                    {{-- Menampilkan nama supplier --}}
+                                    <td>
+                                        @if ($transaction->product && $transaction->product->supplier) {{-- Perbaikan di sini: $transaction->product->supplier --}}
+                                            {{ $transaction->product->supplier->name }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    {{-- Menampilkan kontak supplier --}}
+                                    <td>
+                                        @if ($transaction->product && $transaction->product->supplier) {{-- Perbaikan di sini: $transaction->product->supplier --}}
+                                            {{ $transaction->product->supplier->contact }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td class="text-center">{{ $transaction->quantity }}</td>
+                                    <td class="text-center">
+                                        <span class="badge {{ $transaction->type == 'Masuk' ? 'bg-success' : 'bg-danger' }}">{{ $transaction->type }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($transaction->product)
+                                            {{ $transaction->product->stock }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td class="text-center">{{ $transaction->created_at->format('d M Y H:i') }}</td>
+                                </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center text-secondary py-3">Belum ada aktivitas barang.</td>
+                                        {{-- Sesuaikan colspan dengan jumlah kolom total di tabel Anda (9 kolom: No, Barang, Harga, Deskripsi, Supplier, Kontak, Stok, Tipe, Stok Terbaru, Tanggal) --}}
+                                        <td colspan="9" class="text-center text-secondary py-3">Belum ada aktivitas barang.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
