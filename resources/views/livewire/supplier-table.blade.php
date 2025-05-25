@@ -28,7 +28,7 @@
                 @if (!$showAddForm && !$showEditForm)
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>Supplier</h6>
+                            <h6>Pemasok</h6>
                             <button class="btn btn-dark" type="button" wire:click="$set('showAddForm', true)">
                                 <i class="fa fa-plus"></i> Tambah
                             </button>
@@ -37,8 +37,8 @@
                             <div class="px-4 mt-4">
                                 <div class="row align-items-center">
                                 <div class="row mb-3"> <div class="col-md-4"> <div class="form-group">
-                                    <label for="search" class="form-label">Cari Supplier</label>
-                                    <input type="text" id="search" placeholder="Masukkan supplier ... " wire:model.live.debounce.500ms="search" class="form-control">
+                                    <label for="search" class="form-label">Cari Pemasok</label>
+                                    <input type="text" id="search" placeholder="Masukkan nama pemasok ... " wire:model.live.debounce.500ms="search" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                 @if ($showAddForm)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6>Tambah Supplier</h6>
+                            <h6>Tambah Pemasok</h6>
                             <button class="btn btn-warning" type="button" wire:click="$set('showAddForm', false)">
                                 Batal
                             </button>
@@ -138,7 +138,7 @@
                 @if ($showEditForm)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6>Edit Supplier</h6>
+                            <h6>Edit Pemasok</h6>
                             <button class="btn btn-warning" type="button" wire:click="$set('showEditForm', false)">
                                 Batal
                             </button>
