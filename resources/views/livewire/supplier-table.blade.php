@@ -56,24 +56,23 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($suppliers as $supplier)
-                                    <tr>
+                                    <tr wire:key="supplier-{{ $supplier->id }}"> {{-- Tambahkan wire:key untuk kinerja Livewire --}}
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $supplier->name }}</td>
+                                        <td>
+                                            {{-- Klik pada nama supplier untuk membuka/menutup detail produk --}}
+                                            <a href="#" wire:click.prevent="toggleProductList({{ $supplier->id }})">
+                                                {{ $supplier->name }}
+                                                @if ($openProductList === $supplier->id)
+                                                    <i class="fas fa-chevron-up ms-2 text-primary"></i> {{-- Icon panah ke atas --}}
+                                                @else
+                                                    <i class="fas fa-chevron-down ms-2 text-primary"></i> {{-- Icon panah ke bawah --}}
+                                                @endif
+                                            </a>
+                                        </td>
                                         <td>{{ $supplier->contact }}</td>
                                         <td>{{ $supplier->address }}</td>
-                                        <td>
-                                            {{-- Menampilkan data produk yang menggunakan supplier ini --}}
-                                            @if ($supplier->products->count() > 0)
-                                                <ul class="list-unstyled mb-0"> {{-- Menggunakan unordered list untuk daftar ke bawah --}}
-                                                    @foreach ($supplier->products as $product)
-                                                        <li>
-                                                            <i class="fa fa-tag me-1"></i> {{ $product->name }} (Stok: {{ $product->stock }}, Harga: Rp {{ number_format($product->price, 0, ',', '.') }})
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @else
-                                                <span class="text-muted">Tidak ada produk terkait</span>
-                                            @endif
+                                        <td class="text-center">
+                                            <span class="badge bg-secondary">{{ $supplier->products->count() }} Produk</span>
                                         </td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-primary" type="button" wire:click="update({{ $supplier->id }})">
@@ -84,10 +83,47 @@
                                             </button>
                                         </td>
                                     </tr>
+
+                                    {{-- Baris untuk menampilkan detail produk --}}
+                                    @if ($openProductList === $supplier->id)
+                                        <tr wire:key="products-{{ $supplier->id }}"> {{-- Opsional: tambahkan kelas untuk styling --}}
+                                            <td colspan="7"> {{-- colspan harus sesuai dengan jumlah kolom utama tabel Anda --}}
+                                                <div class="p-0">
+                                                    @if ($supplier->products->count() > 0)
+                                                        <div class="table-responsive">
+                                                            <table class="table table-sm table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">#</th>
+                                                                        <th>Nama Produk</th>
+                                                                        <th>Harga</th>
+                                                                        <th>Deskripsi</th>
+                                                                        <th class="text-center">Jumlah</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($supplier->products as $product)
+                                                                        <tr>
+                                                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                                                            <td>{{ $product->name }}</td>
+                                                                            <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                                                                            <td  style="white-space: normal; overflow-wrap: break-word;">{{ $product->description }}</td>
+                                                                            <td class="text-center">{{ $product->stock }}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    @else
+                                                        <p class="text-muted text-center">Supplier ini belum memiliki produk terkait.</p>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
+
                                     @empty
                                         <tr>
-                                            {{-- Sesuaikan colspan dengan jumlah kolom total di tabel Anda --}}
-                                            {{-- Ada 6 kolom: No, Nama Supplier, Kontak, Alamat, Produk, Aksi --}}
                                             <td colspan="6" class="text-center text-secondary py-3">Data supplier belum tersedia.</td>
                                         </tr>
                                     @endforelse

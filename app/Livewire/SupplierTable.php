@@ -20,6 +20,7 @@ class SupplierTable extends Component
     public $supplierIdToDelete;
     public $supplierNameToDelete;
     public $search = '';
+    public $openProductList = null;
 
     // Properti untuk pagination (opsional jika ingin override default Livewire)
     public $perPage = 10;
@@ -30,6 +31,17 @@ class SupplierTable extends Component
         'contact' => 'nullable|string|max:500', // Batasi panjang string
         'address' => 'nullable|string|max:1000', // Batasi panjang string
     ];
+
+    public function toggleProductList($supplierId)
+    {
+        // Jika ID supplier yang sama ditekan lagi, tutup detailnya
+        if ($this->openProductList === $supplierId) {
+            $this->openProductList = null;
+        } else {
+            // Jika ID supplier berbeda, buka detail supplier ini
+            $this->openProductList = $supplierId;
+        }
+    }
 
     // Lifecycle hook Livewire: reset halaman saat pencarian berubah
     public function updatedSearch()
