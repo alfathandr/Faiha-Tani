@@ -116,8 +116,22 @@
                                             </td>
                                             <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                             <td style="white-space: normal; overflow-wrap: break-word;">{{ $product->description }}</td>
-                                            <td>{{ $product->supplier }}</td>
-                                            <td>{{ $product->supplier_contact }}</td>
+                                            {{-- Menampilkan nama supplier --}}
+                                            <td>
+                                                @if ($product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                                    {{ $product->supplier->name }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                            {{-- Menampilkan kontak supplier --}}
+                                            <td>
+                                                @if ($product->supplier) {{-- Cek apakah produk memiliki supplier terkait --}}
+                                                    {{ $product->supplier->contact }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
                                             <td class="text-center">{{ $product->stock }}</td>
                                             <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
                                             <td class="text-center">
@@ -172,20 +186,20 @@
                                     <input class="form-control" type="file" wire:model="image" required>
                                     @error('image') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
+                                <div class="col-md-6">
+                                    <label>Pilih Supplier</label>
+                                    <select class="form-control" wire:model="supplier_id" required>
+                                        <option value="">-- Pilih Supplier --</option>
+                                        @foreach($suppliersList as $supplier)
+                                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('supplier_id') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
                                 <div class="col-md-12">
                                     <label>Deskripsi</label>
                                     <textarea class="form-control" rows="5" wire:model="description"></textarea>
                                     @error('description') <span class="text-danger text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Pemasok</label>
-                                    <input class="form-control" type="text" wire:model="supplier">
-                                    @error('supplier') <span class="text-danger text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Kontak Pemasok</label>
-                                    <input class="form-control" type="text" wire:model="supplier_contact">
-                                    @error('supplier_contact') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12 mt-3">
                                     <button class="btn btn-dark btn-lg w-100" wire:click="addProduct">
@@ -208,44 +222,51 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label>Nama Barang</label>
-                                    <input class="form-control" type="text" wire:model="name" required>
+                                    <input class="form-control" type="text" wire:model="name">
+                                    @error('name') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Harga</label>
-                                    <input class="form-control" type="number" wire:model="price" required>
+                                    <input class="form-control" type="number" wire:model="price">
+                                    @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Stok</label>
-                                    <input class="form-control" type="number" wire:model="stock" required>
+                                    <input class="form-control" type="number" wire:model="stock">
+                                    @error('stock') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gambar</label>
                                     <input class="form-control" type="file" wire:model="image">
+                                    @error('image') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+
+                                    {{-- Tampilkan gambar lama jika ada saat mode edit --}}
+                                    @if ($selectedProduct && $selectedProduct->image)
+                                        <img src="{{ asset('storage/' . $selectedProduct->image) }}" alt="Gambar Produk" class="img-thumbnail mt-2" style="max-width: 100px;">
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Pilih Supplier</label>
+                                    <select class="form-control" wire:model="supplier_id">
+                                        <option value="">-- Pilih Supplier --</option>
+                                        @foreach($suppliersList as $supplier)
+                                            <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('supplier_id') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12">
-                                    <label>Deskripsi</label> 
-                                    <textarea class="form-control" rows="5" wire:model="description" required></textarea>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Pemasok</label>
-                                    <input class="form-control" type="text" wire:model="supplier">
-                                    @error('supplier') <span class="text-danger text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Kontak Pemasok</label>
-                                    <input class="form-control" type="text" wire:model="supplier_contact">
-                                    @error('supplier_contact') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                    <label>Deskripsi</label>
+                                    <textarea class="form-control" rows="5" wire:model="description"></textarea>
+                                    @error('description') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-12 mt-3">
-                                <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct"
-                                    wire:loading.attr="disabled" wire:target="image"
-                                    :disabled="!$wire.name || !$wire.price || !$wire.stock || !$wire.description">
-                                    Perbarui Data
-                                </button>
+                                    <button class="btn btn-dark btn-lg w-100" wire:click="updateProduct" wire:loading.attr="disabled" wire:target="image">
+                                        Perbarui Data
+                                    </button>
                                 </div>
-
                             </div>
                         </div>
                     </div>

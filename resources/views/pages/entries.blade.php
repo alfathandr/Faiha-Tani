@@ -3,7 +3,8 @@
 @section('content')
 
 
-    <livewire:entries-table /> 
+    <livewire:entries-table />
+
 
 
 @endsection

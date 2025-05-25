@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('supplier_contact')->nullable()->after('supplier');
+            $table->string('supplier_id')->nullable()->after('image'); // Menambahkan kolom 'supplier' setelah kolom 'image', bisa null
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('supplier_contact'); 
+            $table->dropColumn('supplier_id'); // Menghapus kolom 'supplier' jika migration di-rollback
         });
     }
 };
