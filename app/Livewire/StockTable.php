@@ -30,6 +30,21 @@ class StockTable extends Component
         }
     }
 
+    public function getCorrectedStock(Product $product)
+    {
+        // Hitung total stok dasar (entri + keluar)
+        $baseStock = $product->stockExits()->sum('quantity') + $product->stockEntries()->sum('quantity');
+
+        // Ini adalah tempat Anda menerapkan logika kondisional.
+        // Asumsi: 'is_overcounted' adalah properti boolean di model Product.
+        // Jika tidak ada properti ini, Anda bisa ganti dengan logika lain, contoh:
+        // if ($product->id === 7 || $product->name === 'Produk A Bermasalah') {
+        if (isset($product->is_overcounted) && $product->is_overcounted) {
+            return $baseStock - 1;
+        }
+
+        return $baseStock;
+    }
 
     public function render()
     {
