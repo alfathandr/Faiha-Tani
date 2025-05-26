@@ -26,6 +26,9 @@ class Product extends Model
         return $this->hasMany(StockExit::class);
     }
 
+
+    
+
     public function getStockAttribute()
     {
         $totalMasuk = $this->stockEntries()->sum('quantity');

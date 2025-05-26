@@ -5,6 +5,7 @@
 
       <livewire:report-header /> 
       <livewire:report-mk-chart /> 
+      
 
 
 @endsection

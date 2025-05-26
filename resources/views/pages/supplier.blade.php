@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Supplier')
+@section('title', 'Pemasok')
 @section('content')
 
 

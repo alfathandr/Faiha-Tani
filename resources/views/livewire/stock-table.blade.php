@@ -65,37 +65,44 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                    <tbody>
-                                        @forelse ($products as $product)
-                                        <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
+                                <tbody>
+                                    @forelse ($products as $product)
+                                    <tr wire:key="product-{{ $product->id }}"> {{-- Tambahkan wire:key untuk kinerja Livewire --}}
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>
+                                            <div class="d-flex px-2 py-1 align-items-center"> {{-- Menambahkan align-items-center --}}
+                                                {{-- Tampilkan gambar atau placeholder --}}
+                                                @if ($product->image)
                                                     <img src="{{ asset('storage/' . $product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
-                                                    <div>
-                                                        <h6 class="mb-0 text-sm" style="white-space: normal; overflow-wrap: break-word;">{{ $product->name }}</h6>
-                                                    </div>
+                                                @else
+                                                    <i class="fas fa-box-open me-3 text-muted" style="font-size: 24px;"></i> {{-- Placeholder icon --}}
+                                                @endif
+                                                <div>
+                                                    <h6 class="mb-0 text-sm" style="white-space: normal; overflow-wrap: break-word;">{{ $product->name }}</h6>
                                                 </div>
-                                            </td>
-                                            <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
-                                            <td class="text-center text-danger">{{ $product->stock }}</td>
-                                           <td class="text-center text-info">{{ $product->stockExits()->sum('quantity') }}</td>
-                                            {{-- Kolom stok terkoreksi --}}
-                                            <td class="text-center">
-                                                {{ $this->getCorrectedStock($product) }}
-                                            </td>
-                                            {{-- Kolom nilai rupiah stok keluar --}}
-                                            <td class="text-center text-info">Rp {{ number_format($this->getStockExitsValue($product), 0, ',', '.') }},-</td>
-                                            {{-- Kolom nilai rupiah stok masuk --}}
-                                            <td class="text-center text-danger">Rp {{ number_format($this->getStockEntriesValue($product), 0, ',', '.') }},-</td>
-                                            <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
+                                            </div>
+                                        </td>
+                                        <td>Rp {{ number_format((int) $product->price, 0, ',', '.') }},-</td>
+                                        <td class="text-center text-danger">{{ (int) $product->stock }}</td> {{-- Stok dari kolom produk --}}
+
+                                        {{-- Menggunakan metode dari komponen Livewire untuk perhitungan --}}
+                                        <td class="text-center text-info">{{ $this->getTotalExitsQuantity($product) }}</td> {{-- Jumlah keluar --}}
+                                        <td class="text-center text-success">{{ $this->getTotalEntriesQuantity($product) }}</td> {{-- Jumlah masuk --}}
+                                        {{-- Kolom nilai rupiah stok keluar --}}
+                                        <td class="text-center text-info">Rp {{ number_format($this->getTotalExitsValue($product), 0, ',', '.') }},-</td>
+                                        {{-- Kolom nilai rupiah stok masuk --}}
+                                        <td class="text-center text-success">Rp {{ number_format($this->getNetStockValue($product), 0, ',', '.') }},-</td>
+
+                                        <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
+                                    </tr>
+                                    @empty
+                                        <tr>
+                                            {{-- Sesuaikan colspan dengan jumlah kolom total Anda --}}
+                                            {{-- Kolom yang ada: No, Barang, Harga, Stok Produk, Jumlah Keluar, Jumlah Masuk, Stok Terkoreksi, Nilai Keluar, Nilai Masuk, Terakhir Diperbarui = 10 kolom --}}
+                                            <td colspan="10" class="text-center text-secondary py-3">Data barang belum tersedia.</td>
                                         </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="5" class="text-center text-secondary py-3">Data barang belum tersedia.</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
+                                    @endforelse
+                                </tbody>
                                 </table>
                             </div>
                         </div>
