@@ -50,6 +50,17 @@
                                         <input type="date" id="end-date" wire:model.live.defer="endDate" class="form-control">
                                     </div>
                                 </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Pilih Data</label>
+                                        <select class="form-control" wire:model.live.defer="data"> {{-- Add .live here for instant filtering --}}
+                                            <option value="">-- Tampilkan Semua Data --</option>
+                                            <option value="Entri">Data Masuk</option>
+                                            <option value="Exit">Data Keluar</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
