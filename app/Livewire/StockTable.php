@@ -46,6 +46,21 @@ class StockTable extends Component
         return $baseStock;
     }
 
+    public function getStockExitsValue(Product $product)
+    {
+        $totalQuantityExits = $product->stockExits()->sum('quantity');
+        return $product->price * $totalQuantityExits;
+    }
+
+    /**
+     * Metode untuk menghitung total nilai rupiah dari stok masuk (pembelian).
+     */
+    public function getStockEntriesValue(Product $product)
+    {
+        $totalQuantityEntries = $product->stockEntries()->sum('quantity');
+        return $product->price * $totalQuantityEntries;
+    }
+
     public function render()
     {
         $products = Product::query()
