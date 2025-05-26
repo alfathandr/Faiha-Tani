@@ -8,8 +8,8 @@
                         <div class="col-4 d-flex">
                             <canvas id="stockChart" width="100%" height="150"></canvas>
                         </div>
-                        
-                        <!-- Informasi Total Produk & Penjualan di Kanan -->
+
+                    <!-- Informasi Total Produk & Penjualan di Kanan -->
                         <div class="col-4">
                             <h5 class="font-weight-bolder">Report</h5>
                             <h6 class="text-uppercase font-weight-bold">Jumlah Total Barang: <strong class="text-dark"> {{ $totalProducts }}</strong></h6>
@@ -18,18 +18,6 @@
                             <h6 class="text-uppercase font-weight-bold">Total Penjualan: <strong class="text-success">Rp {{ number_format($totalSales, 0, ',', '.') }}</strong></h6>
                         </div>
 
-                        <!-- <div class="col-4">
-                            <h5 class="font-weight-bolder">Cetak Report</h5>
-                            <button class="btn btn-icon btn-success" type="button">
-                                <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                <span class="btn-inner--text"> SEMUA DATA</span>
-                            </button>
-
-                            <button class="btn btn-icon btn-primary" type="button">
-                                <span class="btn-inner--icon block"><i class="ni ni-bag-17"></i></span>
-                                <span class="btn-inner--text block"> BULAN INI</span>
-                            </button>
-                        </div> -->
 
                         <div class="col-4">
                             <h5 class="font-weight-bolder">Cetak Report</h5>
@@ -41,6 +29,16 @@
                             <a href="{{ route('report.show', ['type' => 'monthly']) }}" class="btn btn-icon btn-primary" target="_blank">
                                 <span class="btn-inner--icon block"><i class="ni ni-bag-17"></i></span>
                                 <span class="btn-inner--text block"> BULAN INI</span>
+                            </a>
+
+                            <a href="{{ route('report.exits') }}" class="btn btn-icon btn-warning" target="_blank">
+                                <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
+                                <span class="btn-inner--text"> DATA KELUAR</span>
+                            </a>
+
+                            <a href="{{ route('report.entries') }}" class="btn btn-icon btn-info" target="_blank">
+                                <span class="btn-inner--icon block"><i class="ni ni-bag-17"></i></span>
+                                <span class="btn-inner--text block"> DATA MASUK</span>
                             </a>
                         </div>
                     </div>
