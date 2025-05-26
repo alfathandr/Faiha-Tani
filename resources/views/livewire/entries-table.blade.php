@@ -187,9 +187,9 @@
                                     @error('image') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Pilih Supplier</label>
+                                    <label>Pilih Pemasok</label>
                                     <select class="form-control" wire:model="supplier_id" required>
-                                        <option value="">-- Pilih Supplier --</option>
+                                        <option value="">-- Pilih Pemasok --</option>
                                         @foreach($suppliersList as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                         @endforeach
@@ -250,7 +250,7 @@
                                 <div class="col-md-6">
                                     <label>Pilih Pemasok</label>
                                     <select class="form-control" wire:model="supplier_id">
-                                        <option value="">-- Pilih Supplier --</option>
+                                        <option value="">-- Pilih Pemasok --</option>
                                         @foreach($suppliersList as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                         @endforeach
