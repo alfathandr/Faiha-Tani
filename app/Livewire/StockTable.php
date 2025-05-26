@@ -55,6 +55,7 @@ class StockTable extends Component
     // Metode untuk mendapatkan nilai rupiah total stok keluar
     public function getTotalExitsValue(Product $product): int
     {
+<<<<<<< HEAD
         $totalQuantityExits = $this->getTotalExitsQuantity($product);
         $productPrice = (int) $product->price;
 
@@ -88,8 +89,39 @@ class StockTable extends Component
         $productPrice = (int) $product->price;
 
         return (int) ($productPrice * $currentQuantity);
+=======
+        $totalQuantityExits = $product->stockExits()->sum('quantity');
+
+        // Jika produk ditandai sebagai kelebihan hitung, dan ini mempengaruhi total keluar
+        // Maka kita juga kurangi kuantitasnya sebelum dikalikan harga.
+        // PENTING: Anda harus mengkonfirmasi apakah is_overcounted juga berlaku untuk stockExits.
+        // Jika tidak, hapus kondisi if ini.
+        if (isset($product->is_overcounted) && $product->is_overcounted) {
+            $totalQuantityExits = max(0, $totalQuantityExits - 1); // Pastikan tidak negatif
+        }
+
+        return $product->price * $totalQuantityExits;
     }
 
+    /**
+     * Metode untuk menghitung total nilai rupiah dari stok masuk (pembelian).
+     * Akan mengurangi 1 dari kuantitas jika $product->is_overcounted adalah true.
+     */
+    public function getStockEntriesValue(Product $product)
+    {
+        $totalQuantityEntries = $product->stockEntries()->sum('quantity');
+
+        // Jika produk ditandai sebagai kelebihan hitung, dan ini mempengaruhi total masuk
+        // Maka kita juga kurangi kuantitasnya sebelum dikalikan harga.
+        // PENTING: Anda harus mengkonfirmasi apakah is_overcounted juga berlaku untuk stockEntries.
+        // Jika tidak, hapus kondisi if ini.
+        if (isset($product->is_overcounted) && $product->is_overcounted) {
+            $totalQuantityEntries = max(0, $totalQuantityEntries - 1); // Pastikan tidak negatif
+        }
+
+        return $product->price * $totalQuantityEntries;
+>>>>>>> 28dfa362380547c2457d15fd9ab47099ef782d26
+    }
     public function render()
     {
         $products = Product::query()
