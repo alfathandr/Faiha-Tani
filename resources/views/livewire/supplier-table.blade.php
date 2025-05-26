@@ -28,7 +28,7 @@
                 @if (!$showAddForm && !$showEditForm)
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>Pemasok</h6>
+                            <h6>Data Pemasok</h6>
                             <button class="btn btn-dark" type="button" wire:click="$set('showAddForm', true)">
                                 <i class="fa fa-plus"></i> Tambah
                             </button>
