@@ -60,8 +60,6 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pemasok</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kontak</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
@@ -98,22 +96,6 @@
                                             Rp {{ number_format($transaction->product->price, 0, ',', '.') }},-
                                         @else
                                             Rp 0,-
-                                        @endif
-                                    </td>
-                                    {{-- Menampilkan nama supplier --}}
-                                    <td>
-                                        @if ($transaction->product && $transaction->product->supplier) {{-- Perbaikan di sini: $transaction->product->supplier --}}
-                                            {{ $transaction->product->supplier->name }}
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    {{-- Menampilkan kontak supplier --}}
-                                    <td>
-                                        @if ($transaction->product && $transaction->product->supplier) {{-- Perbaikan di sini: $transaction->product->supplier --}}
-                                            {{ $transaction->product->supplier->contact }}
-                                        @else
-                                            -
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $transaction->quantity }}</td>

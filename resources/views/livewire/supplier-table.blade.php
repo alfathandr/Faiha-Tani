@@ -42,60 +42,58 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-top mb-0">
-                                <thead>
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-top mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kontak</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Alamat</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Barang</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Update Pada</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    @forelse ($suppliers as $supplier)
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kontak</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Alamat</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Barang</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Update Pada</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $supplier->name }}</td>
+                                        <td>{{ $supplier->contact }}</td>
+                                        <td>{{ $supplier->address }}</td>
+                                        <td class="align-top" >
+                                            {{-- Menampilkan data produk yang menggunakan supplier ini --}}
+                                            @if ($supplier->products->count() > 0)
+                                                <ul class="list-unstyled mb-0 align-top"> {{-- Menggunakan unordered list untuk daftar ke bawah --}}
+                                                    @foreach ($supplier->products as $product)
+                                                        <li>
+                                                            {{ $loop->iteration }}. {{ $product->name }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <span class="text-muted">Tidak ada produk terkait</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $supplier->updated_at->format('d-m-Y H:i') }}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-primary" type="button" wire:click="update({{ $supplier->id }})">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" type="button" wire:click="confirmDelete({{ $supplier->id }})">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
-                                </thead>
-                                    <tbody>
-                                        @forelse ($suppliers as $supplier)
+                                    @empty
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $supplier->name }}</td>
-                                            <td>{{ $supplier->contact }}</td>
-                                            <td>{{ $supplier->address }}</td>
-                                            <td class="align-top" >
-                                                {{-- Menampilkan data produk yang menggunakan supplier ini --}}
-                                                @if ($supplier->products->count() > 0)
-                                                    <ul class="list-unstyled mb-0 align-top"> {{-- Menggunakan unordered list untuk daftar ke bawah --}}
-                                                        @foreach ($supplier->products as $product)
-                                                            <li>
-                                                                <i class="fa fa-tag me-1"></i>{{ $loop->iteration }}. {{ $product->name }}
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @else
-                                                    <span class="text-muted">Tidak ada produk terkait</span>
-                                                @endif
-                                            </td>
-                                            <td>{{ $product->updated_at->format('d-m-Y H:i') }}</td>
-                                            <td class="text-center">
-                                                <button class="btn btn-sm btn-primary" type="button" wire:click="update({{ $supplier->id }})">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger" type="button" wire:click="confirmDelete({{ $supplier->id }})">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </td>
+                                            <td colspan="6" class="text-center text-secondary py-3">Data supplier belum tersedia.</td>
                                         </tr>
-                                        @empty
-                                            <tr>
-                                                {{-- Sesuaikan colspan dengan jumlah kolom total di tabel Anda --}}
-                                                {{-- Ada 6 kolom: No, Nama Supplier, Kontak, Alamat, Produk, Aksi --}}
-                                                <td colspan="6" class="text-center text-secondary py-3">Data supplier belum tersedia.</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                         </div>
                     </div>
                 @endif
