@@ -80,7 +80,13 @@
                                             <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                             <td class="text-center text-danger">{{ $product->stock }}</td>
                                             <td class="text-center text-info">{{ $product->stockExits()->sum('quantity') }}</td>
-                                            <td class="text-center">{{ $product->stockExits()->sum('quantity') + $product->stockEntries()->sum('quantity') - 1 }}</td>
+                                            <td class="text-center">
+                                                @if ($product->is_overcounted)
+                                                    {{ $product->stockExits()->sum('quantity') + $product->stockEntries()->sum('quantity') - 1 }}
+                                                @else
+                                                    {{ $product->stockExits()->sum('quantity') + $product->stockEntries()->sum('quantity') }}
+                                                @endif
+                                            </td>
                                             <td class="text-center text-info">Rp {{ number_format($product->price * $product->stockExits()->sum('quantity'), 0, ',', '.') }},-</td>
                                             <td class="text-center text-danger">Rp {{ number_format($product->price * $product->stockEntries()->sum('quantity'), 0, ',', '.') }},-</td>
                                             <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
