@@ -72,7 +72,7 @@
                                         <td>{{ $supplier->contact }}</td>
                                         <td>{{ $supplier->address }}</td>
                                         <td class="text-center">
-                                            <span class="badge bg-secondary">{{ $supplier->products->count() }} Produk</span>
+                                            <span class="badge bg-secondary">{{ $supplier->products->count() }} Barang</span>
                                         </td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-primary" type="button" wire:click="update({{ $supplier->id }})">
@@ -95,7 +95,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="text-center">#</th>
-                                                                        <th>Nama Produk</th>
+                                                                        <th>Nama Barang</th>
                                                                         <th>Harga</th>
                                                                         <th>Deskripsi</th>
                                                                         <th class="text-center">Jumlah</th>
