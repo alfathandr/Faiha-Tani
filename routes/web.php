@@ -13,10 +13,11 @@ use App\Http\Controllers\SupplierController;
 
 // Authentication Routes
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Public Landing Page
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/', [LandingController::class, 'index'])->pname('landing');
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
