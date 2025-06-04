@@ -17,7 +17,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Public Landing Page
-Route::get('/', [LandingController::class, 'index'])->pname('landing');
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
