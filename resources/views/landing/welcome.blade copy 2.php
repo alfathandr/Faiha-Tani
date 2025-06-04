@@ -38,7 +38,7 @@
   </nav>
   <!-- End Navbar -->
   <main class="main-content  mt-0">
-  <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" 
+  <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
      style="background-image: url('../assets/img/header.jpg'); background-position: top;">
 
       <span class="mask bg-gradient-dark opacity-6"></span>
@@ -61,7 +61,7 @@
               <h5 class="pt-4">Produk Produk</h5>
             </div>
 
-            
+
             <div class="container overflow-hidden mt-2" style="max-width: 90%; position: relative;">
               <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-inner">
@@ -91,7 +91,7 @@
               </div>
           </div>
 
-          
+
 
             <div class="card-body">
 
@@ -216,7 +216,7 @@
   <script>
     function initMap() {
       // Koordinat dari lokasi Google Maps yang kamu berikan
-    
+
       var lokasi = { lat: -3.0821318, lng: 120.2291859 };
       // Inisialisasi Peta
       var map = new google.maps.Map(document.getElementById("map-default"), {
@@ -232,6 +232,8 @@
       });
     }
   </script>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmIC8YSW_7W4xOkfD7a8eZHS0hhMkEfow&callback=initMap"></script>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
