@@ -13,7 +13,7 @@ use App\Http\Controllers\SupplierController;
 
 // Authentication Routes
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Public Landing Page
