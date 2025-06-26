@@ -45,6 +45,7 @@
             background-color: #007bff;
             color: white;
             font-weight: bold;
+            **text-align: center;
         }
         tbody tr:nth-child(even) {
             background-color: #f2f2f2;
