@@ -6,8 +6,8 @@
                 © <script>
                   document.write(new Date().getFullYear())
                 </script>,
-                made with by
-                <a href="https://digi4our.com" class="font-weight-bold" target="_blank">Faiha Tani</a>
+                made by
+                <a href="#" class="font-weight-bold" target="_blank">Faiha Tani</a>
               </div>
             </div>
             <!-- <div class="col-lg-6">
