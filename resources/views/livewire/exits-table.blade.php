@@ -65,7 +65,7 @@
                                             @endif
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('cost_price')">
-                                            Harga
+                                            Modal
                                             @if ($sortColumn === 'cost_price')
                                                 @if ($sortDirection === 'asc')
                                                     <i class="fa fa-sort-up"></i>
