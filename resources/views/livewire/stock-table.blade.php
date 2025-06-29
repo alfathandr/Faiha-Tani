@@ -19,90 +19,107 @@
                         </div>
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('name')">
-                                            Nama Barang
-                                            @if ($sortColumn === 'name')
-                                                @if ($sortDirection === 'asc')
-                                                    <i class="fa fa-sort-up"></i>
-                                                @else
-                                                    <i class="fa fa-sort-down"></i>
-                                                @endif
-                                            @else
-                                                <i class="fa fa-sort"></i>
-                                            @endif
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('price')">
-                                            Harga
-                                            @if ($sortColumn === 'price')
-                                                @if ($sortDirection === 'asc')
-                                                    <i class="fa fa-sort-up"></i>
-                                                @else
-                                                    <i class="fa fa-sort-down"></i>
-                                                @endif
-                                            @else
-                                                <i class="fa fa-sort"></i>
-                                            @endif
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Stok</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Terjual</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Total</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Harga Terjual</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Harga Belum Terjual</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('updated_at')">
-                                            Update pada
-                                            @if ($sortColumn === 'updated_at')
-                                                @if ($sortDirection === 'asc')
-                                                    <i class="fa fa-sort-up"></i>
-                                                @else
-                                                    <i class="fa fa-sort-down"></i>
-                                                @endif
-                                            @else
-                                                <i class="fa fa-sort"></i>
-                                            @endif
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($products as $product)
-                                    <tr wire:key="product-{{ $product->id }}"> {{-- Tambahkan wire:key untuk kinerja Livewire --}}
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>
-                                            <div class="d-flex px-2 py-1 align-items-center"> {{-- Menambahkan align-items-center --}}
-                                                {{-- Tampilkan gambar atau placeholder --}}
-                                                @if ($product->image)
-                                                    <img src="{{ asset('storage/' . $product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
-                                                @else
-                                                    <i class="fas fa-box-open me-3 text-muted" style="font-size: 24px;"></i> {{-- Placeholder icon --}}
-                                                @endif
-                                                <div>
-                                                    <h6 class="mb-0 text-sm" style="white-space: normal; overflow-wrap: break-word;">{{ $product->name }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Rp {{ number_format((int) $product->price, 0, ',', '.') }},-</td>
-                                        <td class="text-center text-danger">{{ (int) $product->stock }}</td> {{-- Stok dari kolom produk --}}
-
-                                        {{-- Menggunakan metode dari komponen Livewire untuk perhitungan --}}
-                                        <td class="text-center text-info">{{ $this->getTotalExitsQuantity($product) }}</td> {{-- Jumlah keluar --}}
-                                        <td class="text-center text-success">{{ $this->getTotalEntriesQuantity($product) }}</td> {{-- Jumlah masuk --}}
-                                        {{-- Kolom nilai rupiah stok keluar --}}
-                                        <td class="text-center text-info">Rp {{ number_format($this->getTotalExitsValue($product), 0, ',', '.') }},-</td>
-                                        {{-- Kolom nilai rupiah stok masuk --}}
-                                        <td class="text-center text-success">Rp {{ number_format($this->getNetStockValue($product), 0, ',', '.') }},-</td>
-
-                                        <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
-                                    </tr>
-                                    @empty
+                                    <thead>
                                         <tr>
-                                            {{-- Sesuaikan colspan dengan jumlah kolom total Anda --}}
-                                            {{-- Kolom yang ada: No, Barang, Harga, Stok Produk, Jumlah Keluar, Jumlah Masuk, Stok Terkoreksi, Nilai Keluar, Nilai Masuk, Terakhir Diperbarui = 10 kolom --}}
-                                            <td colspan="10" class="text-center text-secondary py-3">Data barang belum tersedia.</td>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('name')">
+                                                Nama Barang
+                                                @if ($sortColumn === 'name')
+                                                    @if ($sortDirection === 'asc')
+                                                        <i class="fa fa-sort-up"></i>
+                                                    @else
+                                                        <i class="fa fa-sort-down"></i>
+                                                    @endif
+                                                @else
+                                                    <i class="fa fa-sort"></i>
+                                                @endif
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('cost_price')">
+                                                Modal
+                                                @if ($sortColumn === 'cost_price')
+                                                    @if ($sortDirection === 'asc')
+                                                        <i class="fa fa-sort-up"></i>
+                                                    @else
+                                                        <i class="fa fa-sort-down"></i>
+                                                    @endif
+                                                @else
+                                                    <i class="fa fa-sort"></i>
+                                                @endif
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('price')">
+                                                Harga
+                                                @if ($sortColumn === 'price')
+                                                    @if ($sortDirection === 'asc')
+                                                        <i class="fa fa-sort-up"></i>
+                                                    @else
+                                                        <i class="fa fa-sort-down"></i>
+                                                    @endif
+                                                @else
+                                                    <i class="fa fa-sort"></i>
+                                                @endif
+                                            </th>
+
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Stok</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Terjual</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Total</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Harga Terjual</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Harga Belum Terjual</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 wrap-text">Keuntungan</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="cursor: pointer;" wire:click="sortBy('updated_at')">
+                                                Update pada
+                                                @if ($sortColumn === 'updated_at')
+                                                    @if ($sortDirection === 'asc')
+                                                        <i class="fa fa-sort-up"></i>
+                                                    @else
+                                                        <i class="fa fa-sort-down"></i>
+                                                    @endif
+                                                @else
+                                                    <i class="fa fa-sort"></i>
+                                                @endif
+                                            </th>
                                         </tr>
-                                    @endforelse
-                                </tbody>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($products as $product)
+                                        <tr wire:key="product-{{ $product->id }}"> {{-- Tambahkan wire:key untuk kinerja Livewire --}}
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>
+                                                <div class="d-flex px-2 py-1 align-items-center"> {{-- Menambahkan align-items-center --}}
+                                                    {{-- Tampilkan gambar atau placeholder --}}
+                                                    @if ($product->image)
+                                                        <img src="{{ asset('storage/' . $product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
+                                                    @else
+                                                        <i class="fas fa-box-open me-3 text-muted" style="font-size: 24px;"></i> {{-- Placeholder icon --}}
+                                                    @endif
+                                                    <div>
+                                                        <h6 class="mb-0 text-sm" style="white-space: normal; overflow-wrap: break-word;">{{ $product->name }}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Rp {{ number_format((int) $product->cost_price, 0, ',', '.') }},-</td>
+                                            <td>Rp {{ number_format((int) $product->price, 0, ',', '.') }},-</td>
+                                            <td class="text-center text-danger">{{ (int) $product->stock }}</td> {{-- Stok dari kolom produk --}}
+                                            <td class="text-center text-info">{{ $this->getTotalExitsQuantity($product) }}</td> {{-- Jumlah keluar --}}
+                                            <td class="text-center text-success">{{ $this->getTotalEntriesQuantity($product) }}</td> {{-- Jumlah masuk --}}
+                                            <td class="text-center text-info">Rp {{ number_format($this->getTotalExitsValue($product), 0, ',', '.') }},-</td>
+                                            <td class="text-center text-success">Rp {{ number_format($this->getNetStockValue($product), 0, ',', '.') }},-</td>
+                                            {{-- Kolom Keuntungan dengan pewarnaan --}}
+                                            @php
+                                            $profit = $this->getTotalExitsQuantity($product) * ($product->price - $product->cost_price);
+                                            @endphp
+                                            <td class="text-center {{ $profit >= 0 ? 'text-success' : 'text-danger' }}">
+                                            Rp {{ number_format($profit, 0, ',', '.') }},-
+                                            </td>
+                                            <td class="text-center">{{ $product->updated_at->format('d-m-Y H:i') }}</td>
+                                        </tr>
+                                        @empty
+                                            <tr>
+                                                {{-- Sesuaikan colspan dengan jumlah kolom total Anda --}}
+                                                {{-- Kolom yang ada: No, Barang, Harga, Stok Produk, Jumlah Keluar, Jumlah Masuk, Stok Terkoreksi, Nilai Keluar, Nilai Masuk, Terakhir Diperbarui = 10 kolom --}}
+                                                <td colspan="10" class="text-center text-secondary py-3">Data barang belum tersedia.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

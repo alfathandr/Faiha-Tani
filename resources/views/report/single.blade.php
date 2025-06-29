@@ -187,11 +187,13 @@
                     <table>
                         <thead>
                             <tr>
-                                <th><i class="fas fa-hashtag icon"></i> ID</th>
-                                <th><i class="fas fa-signature icon"></i> Nama Produk</th>
-                                <th><i class="fas fa-file-alt icon"></i> Deskripsi</th>
-                                <th><i class="fas fa-money-bill-alt icon"></i> Harga</th>
-                                <th><i class="fas fa-warehouse icon"></i> Stok</th>
+                                <th>ID</th>
+                                <th>Nama Produk</th>
+                                <th>Deskripsi</th>
+                                <th>Modal</th>
+                                <th>Harga</th>
+                                <th>Keuntungan</th>
+                                <th>Stok</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -200,7 +202,11 @@
                                     <td>{{ $product->id }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
+                                    <td>Rp {{ number_format($product->cost_price, 0, ',', '.') }},-</td>
                                     <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
+                                    <td>
+                                        Rp {{ number_format($product->profit, 0, ',', '.') }},-
+                                    </td>
                                     <td>{{ $product->stock }}</td>
                                 </tr>
                             @endforeach

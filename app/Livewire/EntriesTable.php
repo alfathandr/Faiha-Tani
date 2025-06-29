@@ -9,11 +9,12 @@ use App\Models\StockEntri;
 use App\Models\StockExit;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB; // Import DB Facade
+use Illuminate\Support\Facades\Log;
 
 class EntriesTable extends Component
 {
     use WithFileUploads;
-    public $name, $description, $price, $stock, $image;
+    public $name, $description, $price,  $cost_price, $stock, $image;
     public $supplier_id; //
     public $selectedProduct;
     public $showEditForm = false;
@@ -32,6 +33,7 @@ class EntriesTable extends Component
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
         'price' => 'required|numeric|min:0',
+        'cost_price' => 'required|numeric|min:0',
         'stock' => 'required|integer|min:0',
         'image' => 'image|max:2048',
         'supplier_id' => 'required|exists:suppliers,id',
@@ -50,6 +52,7 @@ class EntriesTable extends Component
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'cost_price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'image|max:2048', // max 2MB
             'supplier_id' => 'required|exists:suppliers,id', // Pastikan ID supplier valid
@@ -69,8 +72,8 @@ class EntriesTable extends Component
                 'name' => $this->name,
                 'description' => $this->description,
                 'supplier_id' => $this->supplier_id, // Gunakan supplier_id
-                // 'supplier' dan 'supplier_contact' dihapus karena sudah digantikan relasi
                 'price' => $this->price,
+                'cost_price' => $this->price,
                 'stock' => $this->stock,
                 'image' => $imagePath
             ]);
@@ -101,8 +104,8 @@ class EntriesTable extends Component
         $this->name = $this->selectedProduct->name;
         $this->description = $this->selectedProduct->description;
         $this->supplier_id = $this->selectedProduct->supplier_id; // Isi supplier_id dari relasi
-        // 'supplier' dan 'supplier_contact' tidak lagi diisi
         $this->price = $this->selectedProduct->price;
+        $this->cost_price = $this->selectedProduct->cost_price;
         $this->stock = $this->selectedProduct->stock;
         $this->image = null; // Reset input file gambar saat edit, user harus upload ulang jika ingin ganti
         $this->showEditForm = true;
@@ -117,6 +120,7 @@ class EntriesTable extends Component
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'cost_price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|max:2048', // nullable untuk update
             'supplier_id' => 'required|exists:suppliers,id', // Validasi: wajib dan harus ada di tabel suppliers
@@ -138,6 +142,7 @@ class EntriesTable extends Component
                 'description' => $this->description,
                 'supplier_id' => $this->supplier_id, // Gunakan supplier_id
                 'price' => $this->price,
+                'cost_price' => $this->cost_price,
                 'stock' => $this->stock,
             ];
 
@@ -220,7 +225,7 @@ class EntriesTable extends Component
     private function resetForm()
     {
         // Tambahkan 'supplier_id' ke dalam properti yang di-reset
-        $this->reset(['name', 'description', 'supplier_id', 'price', 'stock', 'image', 'selectedProduct', 'showEditForm', 'showAddForm']);
+        $this->reset(['name', 'description', 'supplier_id', 'price',  'cost_price', 'stock', 'image', 'selectedProduct', 'showEditForm', 'showAddForm']);
         // Hapus $this->supplier dan $this->supplier_contact dari reset karena sudah tidak digunakan
     }
 

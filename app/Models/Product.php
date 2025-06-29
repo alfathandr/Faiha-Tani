@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'description', 'supplier', 'supplier_contact', 'price', 'stock', 'image', 'supplier_id'];
+    protected $fillable = ['name', 'description', 'supplier', 'supplier_contact', 'price','cost_price', 'stock', 'image', 'supplier_id'];
 
     public function supplier(): BelongsTo
     {
@@ -25,9 +25,6 @@ class Product extends Model
     {
         return $this->hasMany(StockExit::class);
     }
-
-
-    
 
     public function getStockAttribute()
     {

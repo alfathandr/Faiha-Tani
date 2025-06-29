@@ -70,7 +70,9 @@
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Barang</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Modal</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Harga</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Keuntungan</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stok</th>
@@ -104,11 +106,40 @@
                                     </td>
                                     <td>
                                         @if ($transaction->product)
+                                            Rp {{ number_format($transaction->product->cost_price, 0, ',', '.') }},-
+                                        @else
+                                            Rp 0,-
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($transaction->product)
                                             Rp {{ number_format($transaction->product->price, 0, ',', '.') }},-
                                         @else
                                             Rp 0,-
                                         @endif
                                     </td>
+                                    <td>
+                                        @if ($transaction->product)
+                                            {{-- Keuntungan hanya dihitung jika tipe transaksi adalah 'Keluar' (penjualan) --}}
+                                            @if ($transaction->type == 'Keluar')
+                                                @php
+                                                    // Hitung keuntungan untuk transaksi ini
+                                                    $profit = ($transaction->product->price - $transaction->product->cost_price) * $transaction->quantity;
+                                                @endphp
+                                                {{-- Tampilkan keuntungan dengan warna (hijau jika untung, merah jika rugi) --}}
+                                                <span class="font-weight-bold {{ $profit >= 0 ? 'text-success' : 'text-danger' }}">
+                                                    Rp {{ number_format($profit, 0, ',', '.') }},-
+                                                </span>
+                                            @else
+                                                {{-- Tidak ada keuntungan untuk transaksi barang masuk --}}
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        @else
+                                            {{-- Jika produk pada transaksi ini tidak ditemukan --}}
+                                            <span class="text-muted">N/A</span>
+                                        @endif
+                                    </td>
+
                                     <td class="text-center">{{ $transaction->quantity }}</td>
                                     <td class="text-center">
                                         <span class="badge {{ $transaction->type == 'Masuk' ? 'bg-success' : 'bg-danger' }}">{{ $transaction->type }}</span>

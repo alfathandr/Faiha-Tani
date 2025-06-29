@@ -17,41 +17,120 @@ class ReportController extends Controller
         return view('pages.reports');
     }
 
+
     public function show(string $type): View
     {
-        // Initialize variables to null or empty collections for consistency
+        // Initialize variables
         $stockEntries = collect();
         $stockExits = collect();
-        $products = collect(); // Initialize as empty collection
-
+        $products = collect();
         $title = '';
 
         if ($type === 'all') {
+            // --- Laporan Semua Data (Sudah Benar) ---
             $stockEntries = StockEntri::with('product')->get();
             $stockExits = StockExit::with('product')->get();
-            $products = Product::all(); // Fetch all products for 'all' report
             $title = 'Laporan Semua Data';
-        } elseif ($type === 'monthly') {
-            $now = Carbon::now();
-            // Use copy() to avoid modifying the original Carbon instance
-            $startOfMonth = $now->copy()->startOfMonth()->toDateString();
-            $endOfMonth = $now->copy()->endOfMonth()->toDateString();
 
-            $stockEntries = StockEntri::with('product')
-                                    ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                                    ->get();
-            $stockExits = StockExit::with('product')
-                                  ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                                  ->get();
+            // Kalkulasi keuntungan untuk semua produk berdasarkan seluruh riwayat
+            $products = Product::with('stockExits')->get()->map(function ($product) {
+                $totalQuantitySold = $product->stockExits->sum('quantity');
+                $totalRevenue = $product->stockExits->map(function ($exit) {
+                    return $exit->quantity * $exit->price;
+                })->sum();
+                $totalCogs = $totalQuantitySold * $product->cost_price;
+                $profit = $totalRevenue - $totalCogs;
+
+                $product->total_quantity_sold = $totalQuantitySold;
+                $product->total_revenue = $totalRevenue;
+                $product->total_cogs = $totalCogs;
+                $product->profit = $profit;
+
+                return $product;
+            });
+
+        } elseif ($type === 'monthly') {
+            // --- Laporan Bulanan (BAGIAN YANG DIPERBAIKI) ---
+            $now = Carbon::now();
+            $startOfMonth = $now->copy()->startOfMonth();
+            $endOfMonth = $now->copy()->endOfMonth();
             $title = 'Laporan Bulan Ini (' . $now->format('F Y') . ')';
-            // $products remains an empty collection, as it's not needed for monthly report
+
+            // 1. Ambil transaksi masuk & keluar HANYA untuk bulan ini.
+            $stockEntries = StockEntri::with('product')
+                                        ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                                        ->get();
+            $stockExits = StockExit::with('product')
+                                        ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                                        ->get();
+
+            // 2. Ambil produk, tetapi relasi 'stockExits' yang di-load HANYA dari bulan ini.
+            //    Ini adalah perbaikan kunci untuk logika yang akurat.
+            $products = Product::with(['stockExits' => function ($query) use ($startOfMonth, $endOfMonth) {
+                $query->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+            }])
+            ->whereHas('stockExits', function ($query) use ($startOfMonth, $endOfMonth) {
+                 $query->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+            }) // Hanya ambil produk yang memiliki transaksi keluar di bulan ini
+            ->get()
+            ->map(function ($product) {
+                // Logika kalkulasi ini sekarang berjalan pada data 'stockExits' yang sudah terfilter per bulan.
+                $totalQuantitySold = $product->stockExits->sum('quantity');
+                $totalRevenue = $product->stockExits->map(function ($exit) {
+                    return $exit->quantity * $exit->price;
+                })->sum();
+                $totalCogs = $totalQuantitySold * $product->cost_price;
+                $profit = $totalRevenue - $totalCogs;
+
+                $product->total_quantity_sold = $totalQuantitySold;
+                $product->total_revenue = $totalRevenue;
+                $product->total_cogs = $totalCogs;
+                $product->profit = $profit;
+
+                return $product;
+            }); // 3. Sintaks penutup 'map()' yang hilang sudah diperbaiki.
+
         } else {
-            // Abort if the provided type is not valid
             abort(404, 'Jenis laporan tidak valid.');
         }
 
         return view('report.single', compact('stockEntries', 'stockExits', 'products', 'title'));
     }
+    // public function show(string $type): View
+    // {
+    //     // Initialize variables to null or empty collections for consistency
+    //     $stockEntries = collect();
+    //     $stockExits = collect();
+    //     $products = collect(); // Initialize as empty collection
+
+    //     $title = '';
+
+    //     if ($type === 'all') {
+    //         $stockEntries = StockEntri::with('product')->get();
+    //         $stockExits = StockExit::with('product')->get();
+    //         $products = Product::all(); // Fetch all products for 'all' report
+    //         $title = 'Laporan Semua Data';
+    //     } elseif ($type === 'monthly') {
+    //         $now = Carbon::now();
+    //         // Use copy() to avoid modifying the original Carbon instance
+    //         $startOfMonth = $now->copy()->startOfMonth()->toDateString();
+    //         $endOfMonth = $now->copy()->endOfMonth()->toDateString();
+
+    //         $stockEntries = StockEntri::with('product')
+    //                                 ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+    //                                 ->get();
+    //         $stockExits = StockExit::with('product')
+    //                               ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+    //                               ->get();
+    //         $title = 'Laporan Bulan Ini (' . $now->format('F Y') . ')';
+    //         // $products remains an empty collection, as it's not needed for monthly report
+    //     } else {
+    //         // Abort if the provided type is not valid
+    //         abort(404, 'Jenis laporan tidak valid.');
+    //     }
+
+    //     return view('report.single', compact('stockEntries', 'stockExits', 'products', 'title'));
+    // }
 
     public function entries(): View // Removed 'string $type' if not used in route
     {

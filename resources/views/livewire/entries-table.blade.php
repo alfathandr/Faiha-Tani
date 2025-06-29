@@ -60,6 +60,18 @@
                                                 <i class="fa fa-sort"></i>
                                             @endif
                                         </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('cost_price')">
+                                            Modal
+                                            @if ($sortColumn === 'cost_price')
+                                                @if ($sortDirection === 'asc')
+                                                    <i class="fa fa-sort-up"></i>
+                                                @else
+                                                    <i class="fa fa-sort-down"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-sort"></i>
+                                            @endif
+                                        </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('price')">
                                             Harga
                                             @if ($sortColumn === 'price')
@@ -114,6 +126,7 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>Rp {{ number_format($product->cost_price, 0, ',', '.') }},-</td>
                                             <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                             <td style="white-space: normal; overflow-wrap: break-word;">{{ $product->description }}</td>
                                             {{-- Menampilkan nama supplier --}}
@@ -166,20 +179,25 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-16">
+                                <div class="col-md-6">
                                     <label>Nama Barang</label>
                                     <input class="form-control" type="text" wire:model="name" required>
                                     @error('name') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Harga</label>
-                                    <input class="form-control" type="number" wire:model="price" required>
-                                    @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-6">
                                     <label>Jumlah</label>
                                     <input class="form-control" type="number" wire:model="stock" required>
                                     @error('stock') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Harga Modal</label>
+                                    <input class="form-control" type="number" wire:model="cost_price" required>
+                                    @error('cost_price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Harga</label>
+                                    <input class="form-control" type="number" wire:model="price" required>
+                                    @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gambar</label>
@@ -222,20 +240,25 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label>Nama Barang</label>
                                     <input class="form-control" type="text" wire:model="name">
                                     @error('name') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Harga</label>
-                                    <input class="form-control" type="number" wire:model="price">
-                                    @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-md-6">
                                     <label>Jumlah</label>
                                     <input class="form-control" type="number" wire:model="stock">
                                     @error('stock') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Harga Modal</label>
+                                    <input class="form-control" type="number" wire:model="cost_price">
+                                    @error('cost_price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Harga</label>
+                                    <input class="form-control" type="number" wire:model="price">
+                                    @error('price') <span class="text-danger text-sm">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label>Gambar</label>

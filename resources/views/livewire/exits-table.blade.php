@@ -64,6 +64,18 @@
                                                 <i class="fa fa-sort"></i>
                                             @endif
                                         </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('cost_price')">
+                                            Harga
+                                            @if ($sortColumn === 'cost_price')
+                                                @if ($sortDirection === 'asc')
+                                                    <i class="fa fa-sort-up"></i>
+                                                @else
+                                                    <i class="fa fa-sort-down"></i>
+                                                @endif
+                                            @else
+                                                <i class="fa fa-sort"></i>
+                                            @endif
+                                        </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="cursor: pointer;" wire:click="sortBy('price')">
                                             Harga
                                             @if ($sortColumn === 'price')
@@ -107,6 +119,7 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>Rp {{ number_format($product->cost_price, 0, ',', '.') }},-</td>
                                         <td>Rp {{ number_format($product->price, 0, ',', '.') }},-</td>
                                         <td style="white-space: normal; overflow-wrap: break-word;">{{ $product->description }}</td>
                                             {{-- Menampilkan nama supplier --}}
