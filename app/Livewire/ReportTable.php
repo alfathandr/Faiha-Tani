@@ -39,14 +39,31 @@ class ReportTable extends Component
         }
 
         // Only fetch exits if 'data' is 'Exit' or empty (for all data)
+        // if ($this->data == 'Exit' || empty($this->data)) {
+        //     $exits = StockExit::with('product')
+        //         ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+        //             return $query->whereBetween('created_at', [$startDate, $endDate]);
+        //         })
+        //         ->get()
+        //         ->map(function ($exit) {
+        //             $exit->type = 'Keluar';
+        //             return $exit;
+        //         });
+        // }
+
         if ($this->data == 'Exit' || empty($this->data)) {
             $exits = StockExit::with('product')
                 ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                    return $query->whereBetween('created_at', [$startDate, $endDate]);
+                    // Use 'exits_date' for the date range filtering for StockExit
+                    return $query->whereBetween('exits_date', [$startDate, $endDate]);
                 })
                 ->get()
                 ->map(function ($exit) {
                     $exit->type = 'Keluar';
+                    // **Crucial Change Here:**
+                    // Overwrite `created_at` with `exits_date` for StockExit records.
+                    // This makes the Blade loop consistent using `transaction->created_at`.
+                    $exit->created_at = Carbon::parse($exit->exits_date);
                     return $exit;
                 });
         }

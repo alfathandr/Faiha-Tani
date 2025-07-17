@@ -58,6 +58,29 @@
         .icon {
             margin-right: 5px;
         }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px double #ccc; /* Garis pemisah kop */
+        }
+        .report-header h1 {
+            margin: 0;
+            color: #343a40;
+            font-size: 2.2em;
+        }
+        .report-header p {
+            margin: 5px 0;
+            color: #6c757d;
+            font-size: 1em;
+        }
+        .report-datetime {
+            text-align: right;
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 20px; /* Jarak antara tanggal dan tabel */
+        }
         /* Gaya tombol print */
         .print-button {
             background-color: #17a2b8;
@@ -78,10 +101,21 @@
 <body>
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>{{ $title }}</h2>
             <button class="print-button" onclick="window.print()">
                 <i class="fas fa-print icon"></i> Cetak Laporan
             </button>
+        </div>
+
+        <div class="report-header">
+            <h1>{{ $title }} - Faiha Tani</h1>
+            <p>Bua, Luwu, Sulawesi Selatan</p>
+            <p>Whatsapp: (62) 852 9999 4443</p>
+        </div>
+
+
+
+        <div class="report-datetime">
+            Laporan dicetak pada: {{ $reportGeneratedAt->format('d M Y H:i:s') }}
         </div>
 
         <h3><i class="fas fa-sign-out-alt icon"></i> Stok Keluar</h3>
@@ -122,7 +156,15 @@
                                 </td>
                                 <td>{{ $exit->quantity }}</td>
                                 <td>Rp {{ number_format($exit->price, 0, ',', '.') }},-</td>
-                                <td>{{ $exit->created_at }}</td>
+                                <td>
+                                    @if ($exit->exits_date)
+                                        {{ $exit->exits_date->format('d M Y H:i:s') }}
+                                    @elseif ($exit->created_at)
+                                        {{ $exit->created_at->format('d M Y H:i:s') }}
+                                    @else
+                                        - {{-- Jika keduanya kosong, tampilkan tanda hubung --}}
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

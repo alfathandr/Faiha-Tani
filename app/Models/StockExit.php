@@ -12,10 +12,17 @@ class StockExit extends Model
     use HasFactory;
 
     protected $table = 'stock_exits';
-    protected $fillable = ['product_id', 'quantity', 'price'];
+    protected $fillable = ['product_id', 'quantity', 'price', 'exits_date'];
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
+
+    protected $casts = [
+        'exits_date' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
 }

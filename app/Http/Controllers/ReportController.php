@@ -17,7 +17,6 @@ class ReportController extends Controller
         return view('pages.reports');
     }
 
-
     public function show(string $type): View
     {
         // Initialize variables
@@ -25,9 +24,10 @@ class ReportController extends Controller
         $stockExits = collect();
         $products = collect();
         $title = '';
+        $reportGeneratedAt = Carbon::now(); // **NEW**: Capture the report generation time
 
         if ($type === 'all') {
-            // --- Laporan Semua Data (Sudah Benar) ---
+            // --- Laporan Semua Data ---
             $stockEntries = StockEntri::with('product')->get();
             $stockExits = StockExit::with('product')->get();
             $title = 'Laporan Semua Data';
@@ -50,28 +50,30 @@ class ReportController extends Controller
             });
 
         } elseif ($type === 'monthly') {
-            // --- Laporan Bulanan (BAGIAN YANG DIPERBAIKI) ---
+            // --- Laporan Bulanan ---
             $now = Carbon::now();
             $startOfMonth = $now->copy()->startOfMonth();
             $endOfMonth = $now->copy()->endOfMonth();
             $title = 'Laporan Bulan Ini (' . $now->format('F Y') . ')';
 
-            // 1. Ambil transaksi masuk & keluar HANYA untuk bulan ini.
+            // 1. Ambil transaksi masuk HANYA untuk bulan ini (menggunakan created_at)
             $stockEntries = StockEntri::with('product')
-                                        ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                                        ->get();
-            $stockExits = StockExit::with('product')
-                                        ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-                                        ->get();
+                                     ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                                     ->get();
 
-            // 2. Ambil produk, tetapi relasi 'stockExits' yang di-load HANYA dari bulan ini.
-            //    Ini adalah perbaikan kunci untuk logika yang akurat.
+            // 2. Ambil transaksi keluar HANYA untuk bulan ini (menggunakan exits_date)
+            $stockExits = StockExit::with('product')
+                                   ->whereBetween('exits_date', [$startOfMonth, $endOfMonth]) // **FIXED HERE**
+                                   ->get();
+
+            // 3. Ambil produk yang memiliki transaksi keluar di bulan ini,
+            //    dan relasi 'stockExits' yang di-load HANYA dari bulan ini.
             $products = Product::with(['stockExits' => function ($query) use ($startOfMonth, $endOfMonth) {
-                $query->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+                $query->whereBetween('exits_date', [$startOfMonth, $endOfMonth]); // **FIXED HERE**
             }])
             ->whereHas('stockExits', function ($query) use ($startOfMonth, $endOfMonth) {
-                 $query->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
-            }) // Hanya ambil produk yang memiliki transaksi keluar di bulan ini
+                $query->whereBetween('exits_date', [$startOfMonth, $endOfMonth]); // **FIXED HERE**
+            })
             ->get()
             ->map(function ($product) {
                 // Logika kalkulasi ini sekarang berjalan pada data 'stockExits' yang sudah terfilter per bulan.
@@ -88,67 +90,31 @@ class ReportController extends Controller
                 $product->profit = $profit;
 
                 return $product;
-            }); // 3. Sintaks penutup 'map()' yang hilang sudah diperbaiki.
+            });
 
         } else {
             abort(404, 'Jenis laporan tidak valid.');
         }
 
-        return view('report.single', compact('stockEntries', 'stockExits', 'products', 'title'));
+        // Pass the report generation time to the view
+        return view('report.single', compact('stockEntries', 'stockExits', 'products', 'title', 'reportGeneratedAt'));
     }
-    // public function show(string $type): View
-    // {
-    //     // Initialize variables to null or empty collections for consistency
-    //     $stockEntries = collect();
-    //     $stockExits = collect();
-    //     $products = collect(); // Initialize as empty collection
 
-    //     $title = '';
-
-    //     if ($type === 'all') {
-    //         $stockEntries = StockEntri::with('product')->get();
-    //         $stockExits = StockExit::with('product')->get();
-    //         $products = Product::all(); // Fetch all products for 'all' report
-    //         $title = 'Laporan Semua Data';
-    //     } elseif ($type === 'monthly') {
-    //         $now = Carbon::now();
-    //         // Use copy() to avoid modifying the original Carbon instance
-    //         $startOfMonth = $now->copy()->startOfMonth()->toDateString();
-    //         $endOfMonth = $now->copy()->endOfMonth()->toDateString();
-
-    //         $stockEntries = StockEntri::with('product')
-    //                                 ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-    //                                 ->get();
-    //         $stockExits = StockExit::with('product')
-    //                               ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
-    //                               ->get();
-    //         $title = 'Laporan Bulan Ini (' . $now->format('F Y') . ')';
-    //         // $products remains an empty collection, as it's not needed for monthly report
-    //     } else {
-    //         // Abort if the provided type is not valid
-    //         abort(404, 'Jenis laporan tidak valid.');
-    //     }
-
-    //     return view('report.single', compact('stockEntries', 'stockExits', 'products', 'title'));
-    // }
-
-    public function entries(): View // Removed 'string $type' if not used in route
+    public function entries(): View
     {
         $stockEntries = StockEntri::with('product')->get();
         $title = 'Laporan Semua Data Masuk';
+        $reportGeneratedAt = Carbon::now(); // **NEW**: Capture the report generation time
 
-        // Only pass variables that are actually used in 'report.entries' view
-        // Assuming 'products' is not used here, if it is, fetch it.
-        return view('report.entries', compact('stockEntries', 'title'));
+        return view('report.entries', compact('stockEntries', 'title', 'reportGeneratedAt'));
     }
 
-    public function exits(): View // Removed 'string $type' if not used in route
+    public function exits(): View
     {
         $stockExits = StockExit::with('product')->get();
         $title = 'Laporan Semua Data Keluar';
+        $reportGeneratedAt = Carbon::now(); // **NEW**: Capture the report generation time
 
-        // Only pass variables that are actually used in 'report.exits' view
-        // Assuming 'products' is not used here, if it is, fetch it.
-        return view('report.exits', compact('stockExits', 'title'));
+        return view('report.exits', compact('stockExits', 'title', 'reportGeneratedAt'));
     }
 }

@@ -103,6 +103,7 @@
                                                 <i class="fa fa-sort"></i>
                                             @endif
                                         </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Terjual</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                     </tr>
@@ -139,6 +140,11 @@
                                                 @endif
                                             </td>
                                         <td class="text-center">{{ $product->stock }}</td>
+                                        <td class="align-middle text-center">
+                                            <div class="form-group pt-2">
+                                                <input class="form-control w-100" type="date" wire:model.defer="exits_date">
+                                            </div>
+                                        </td>
                                         <td class="align-middle text-center">
                                             <div class="form-group pt-2">
                                                 <input class="form-control w-100" type="number"
