@@ -151,7 +151,7 @@
                                             N/A
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $transaction->created_at->format('d M Y H:i') }}</td>
+                                    <td class="text-center">{{ $transaction->created_at->format('d M Y') }}</td>
                                 </tr>
                                 @empty
                                     <tr>
