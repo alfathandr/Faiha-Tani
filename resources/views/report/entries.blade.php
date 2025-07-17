@@ -157,7 +157,7 @@
                                 </td>
                                 <td>{{ $entry->quantity }}</td>
                                 <td>Rp {{ number_format($entry->price, 0, ',', '.') }},-</td>
-                                <td>{{ $entry->created_at }}</td>
+                                <td>{{ $entry->created_at->format('d M Y') }}</td>
                             </tr>
                         @endforeach
                     </tbody>

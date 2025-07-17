@@ -158,9 +158,9 @@
                                 <td>Rp {{ number_format($exit->price, 0, ',', '.') }},-</td>
                                 <td>
                                     @if ($exit->exits_date)
-                                        {{ $exit->exits_date->format('d M Y H:i:s') }}
+                                        {{ $exit->exits_date->format('d M Y') }}
                                     @elseif ($exit->created_at)
-                                        {{ $exit->created_at->format('d M Y H:i:s') }}
+                                        {{ $exit->created_at->format('d M Y') }}
                                     @else
                                         - {{-- Jika keduanya kosong, tampilkan tanda hubung --}}
                                     @endif
