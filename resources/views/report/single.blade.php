@@ -108,7 +108,7 @@
         </div>
 
         <div class="report-header">
-            <h1>{{ $title }} - Faiha Tani</h1>
+            <h1>{{ $title }} - Toko Faiha Tani</h1>
             <p>Bua, Luwu, Sulawesi Selatan</p>
             <p>Whatsapp: (62) 852 9999 4443</p>
         </div>
